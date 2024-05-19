@@ -9,18 +9,24 @@ import { FaWifi } from "react-icons/fa";
 import { MdEmojiTransportation } from "react-icons/md";
 import { CgGym } from "react-icons/cg";
 import { TbAirConditioning } from "react-icons/tb";
+import { addNewPG } from '../../utils/pgAPICalls';
+import { uploadFileInStorage } from '../../utils/firebaseFunctions';
+import { useNavigate } from 'react-router-dom';
 
 function NewPGEntryScreen() {
+    const navigate = useNavigate()
     const toast = useToast()
     const [pgName, setPGName] = useState('')
     const [pgLocation, setPGLocation] = useState('')
-    const [roomCondition, setRoomCondition] = useState()
-    const [bathroomCondition, setbathroomCondition] = useState()
-    const [locationConvenience, setLocationConvenience] = useState()
+    const [roomCondition, setRoomCondition] = useState([])
+    const [bathroomCondition, setbathroomCondition] = useState([])
+    const [locationConvenience, setLocationConvenience] = useState([])
+    const [overallRating, setOverallRating] = useState([])
     const [price, setPrice] = useState()
     const [facilities, setFacilities] = useState([])
+    const [imageFile, setImageFile] = useState('')
 
-    const checkingIfWorking = () => {
+    const addNewPGFunction = async() => {
         if (pgName === '' && pgLocation === ''){
             toast({
                 title: 'Error',
@@ -30,16 +36,27 @@ function NewPGEntryScreen() {
                 isClosable: true,
             })
         }
-        else {
-            console.log(pgName)
-            console.log(pgLocation)
-            console.log(roomCondition)
-            console.log(bathroomCondition)
-            console.log(locationConvenience)
-            console.log(price)
-            console.log(facilities)    
+        try {
+            const imageURL = await uploadFileInStorage(imageFile, pgName)
+            const result = await addNewPG(pgName, pgLocation, roomCondition, bathroomCondition, locationConvenience, overallRating, price, facilities, imageURL)
+            toast({
+                title: 'Success',
+                description: "PG Added to Database",
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+            })
+            navigate('/search')
+        }
+        catch(err) {
+            console.log(err)
         }
     }
+
+    const handleImageFileChange = (event) => {
+        const file = event.target.files[0];
+        setImageFile(file);
+    };
 
     return (
         <>
@@ -74,6 +91,15 @@ function NewPGEntryScreen() {
                     <SliderThumb />
                 </Slider>
             </Box>
+            <Box width='60%' marginBottom={5} marginTop={5}>
+                <Text>Overall Rating</Text>
+                <Slider min={0} max={5} step={1} defaultValue={0} onChange={(e) => setOverallRating(e)}>
+                    <SliderTrack>
+                        <SliderFilledTrack />
+                    </SliderTrack>
+                    <SliderThumb />
+                </Slider>
+            </Box>
             <Input value={price} onChange={(e) => setPrice(e.target.value)} width='60%' placeholder="Enter Rent" marginBottom={5} marginTop={5}/>
             <div className='facilities'>
                 <Text marginBottom={3} marginTop={5} fontSize={20} fontWeight={600}>Facilities</Text>
@@ -92,10 +118,14 @@ function NewPGEntryScreen() {
                     </Stack>
                 </CheckboxGroup>
             </div>
-            <Button colorScheme='orange' onClick={() => checkingIfWorking()}>Submit</Button>
+            <Stack display='flex' flexDir='row' marginTop={2} marginBottom={5}>
+                <Text fontWeight={600} fontSize={20}>Upload Image : </Text>
+                <input type='file' accept="image/*" onChange={handleImageFileChange}/>
+            </Stack>
+            <Button colorScheme='orange' onClick={() => addNewPGFunction()}>Submit</Button>
         </div>
         </>
     )
-}
+} 
 
 export default NewPGEntryScreen

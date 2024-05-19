@@ -2,6 +2,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomeScreen from "../screens/homeScreen";
 import SearchScreen from "../screens/searchScreen";
 import NewPGEntryScreen from "../screens/newPGEntryScreen";
+import SpecificPGScreen from "../screens/specificPGScreen";
+import NewCommentScreen from "../screens/addCommentScreen";
 
 const Router = () => {
     const router = createBrowserRouter([
@@ -16,6 +18,14 @@ const Router = () => {
         {
             path: '/newPGEntry',
             element: <NewPGEntryScreen />
+        },
+        {
+            path: '/pgDetails/:pgID',
+            element: <SpecificPGScreen />
+        },
+        {
+            path: '/newComment/:pgId',
+            element: <NewCommentScreen />
         }
     ]);
 

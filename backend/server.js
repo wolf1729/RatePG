@@ -1,6 +1,8 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
+const pgRoutes = require('../backend/routes/pgRoutes')
+const commentRoutes = require('../backend/routes/commentRoutes')
 require('dotenv').config();
 
 const app = express()
@@ -27,7 +29,8 @@ const connectDB = async (dbURL) => {
 }
 
 //ROUTES
-
+app.use('/pgRoutes', pgRoutes)
+app.use('/commentRoutes', commentRoutes)
 
 //SERVER STARTER
 app.listen(port, async() => {
