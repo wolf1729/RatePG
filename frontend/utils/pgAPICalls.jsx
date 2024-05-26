@@ -84,4 +84,24 @@ const updateValuesComment = async(pgId ,bathroomRating, roomRating, locationRati
     }
 }
 
-export { addNewPG, allPG, specificPGusingID, updateValuesComment }
+//API call to get the specific pg using name
+const findPGName = async(pgName) => {
+    try {
+        const pgDetails = await fetch(`${baseURL}/searchName`, {
+            method: 'POST',
+            body: JSON.stringify({
+                pgName: pgName
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        })
+        const data = await pgDetails.json()
+        return data.status
+    }
+    catch(err) {
+        console.log(err)
+    }
+}
+
+export { addNewPG, allPG, specificPGusingID, updateValuesComment, findPGName }

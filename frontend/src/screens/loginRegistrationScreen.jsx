@@ -5,6 +5,7 @@ import { Stack, Switch, Text, Input, Button, useToast, Image } from '@chakra-ui/
 import { useState } from 'react'
 import { userLogin, userRegistration } from '../../utils/userAPICalls'
 import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie';
 
 function LoginRegistrationScreen() {
     const [isChecked, setIsChecked] = useState(false)
@@ -61,6 +62,7 @@ function LoginRegistrationScreen() {
                     duration: 3000,
                     isClosable: true,
                 })
+                Cookies.set('userId', result.userId)
                 navigate('/search')
             }
             catch(err) {
@@ -126,6 +128,7 @@ function LoginRegistrationScreen() {
                     duration: 3000,
                     isClosable: true,
                 })
+                Cookies.set('userId', result.userId)
                 navigate('/search')
             }
             catch(err) {

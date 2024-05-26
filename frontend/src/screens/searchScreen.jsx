@@ -1,17 +1,21 @@
 import '../styles/searchScreenStyle.css';
-import { Button, Input, Select, Card, CardBody, Image, Stack, Heading, Text, CardFooter, ButtonGroup } from "@chakra-ui/react";
+import { Button, Input, Select, Card, CardBody, Image, Stack, Heading, Text, CardFooter, ButtonGroup, useToast } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import HeaderComponent from '../components/header';
 import { allPG } from '../../utils/pgAPICalls';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 function SearchScreen() {
     const navigate = useNavigate()
+    const toast = useToast()
     const [searchOption, setSearchOption] = useState('None');
     const [searchText, setSearchText] = useState('');
     const [pgDetails, setPGDetails] = useState([]);
     // eslint-disable-next-line no-unused-vars
-    const [verified, setVerified] = useState(true)
+    const [verified, setVerified] = useState(false)
+    // eslint-disable-next-line no-unused-vars
+    const [userId, setUserId] = useState('')
 
     useEffect(() => {
         const fetchPGDetails = async () => {
@@ -26,6 +30,23 @@ function SearchScreen() {
         fetchPGDetails()
         
     }, []);
+
+    useEffect(() => {
+        const gettingUserId = () => {
+            try{
+                return Cookies.get('userId')
+            }
+            catch(err) {
+                console.log(err)
+            }
+        }
+        
+        const data = gettingUserId()
+        setUserId(data)
+        if(data){
+            setVerified(true)
+        }
+    }, [])
     
 
     const calculateOverallRating = (overallRatingArray) => {
@@ -37,16 +58,32 @@ function SearchScreen() {
         return (overallRating/overallRatingArray.length).toFixed(1)
     }
 
+    const searchButtonFunction = async() => {
+        try{
+            if(searchText === ''){
+                toast({
+                    description: "Enter PG Name",
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
+                })
+                return
+            }
+        }
+        catch(err) {
+            console.log(err)
+        }
+    }
+
     return (
         <>
             <HeaderComponent searchScreen={true} isVerified={verified}/>
             <div className="mainPageSearchContainer">
                 <Select value={searchOption} onChange={(e) => setSearchOption(e.target.value)} size={['xs', 'md']} width={[59, 36]}>
                     <option value='name'>Name</option>
-                    <option value='location'>Location</option>
                 </Select>
                 <Input value={searchText} onChange={(e) => setSearchText(e.target.value)} size={['xs', 'md']} width={['60%', '75%']} placeholder='Search Your PG' />
-                <Button colorScheme="blue" size={['xs', 'md']}>Search</Button>
+                <Button colorScheme="blue" size={['xs', 'md']} onClick={() => searchButtonFunction()}>Search</Button>
             </div>
             <div className='mainPageSearchResultContainer'>
                 {pgDetails.map((pg, index) => (

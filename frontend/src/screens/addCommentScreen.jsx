@@ -1,11 +1,13 @@
 /* eslint-disable no-unused-vars */
 import '../styles/newPGEntryScreenStyle.css'
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import HeaderComponent from "../components/header"
 import { Input, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Box, Text, Button, useToast } from "@chakra-ui/react"
 import { useNavigate, useParams } from 'react-router-dom';
 import { addNewComment } from '../../utils/commentAPICalls';
 import { updateValuesComment } from '../../utils/pgAPICalls';
+import { usernameAPICall } from '../../utils/userAPICalls';
+import Cookies from 'js-cookie';
 
 function NewCommentScreen() {
     const { pgId } = useParams()
@@ -17,6 +19,22 @@ function NewCommentScreen() {
     const [bathroomCondition, setbathroomCondition] = useState([])
     const [locationConvenience, setLocationConvenience] = useState([])
     const [overallRating, setOverallRating] = useState([])
+    const [userId, setUserId] = useState('')
+
+    useEffect(() => {
+        const gettingUsername = async() => {
+            try{
+                await setUserId(Cookies.get('userId'))
+                const result = await usernameAPICall(userId)
+                setName(result)
+            }
+            catch(err) {
+                console.log(err)
+            }
+        }
+
+        gettingUsername()
+    })
 
     const addNewPGFunction = async() => {
         if (name === '' && comment === ''){
@@ -61,7 +79,6 @@ function NewCommentScreen() {
         <>
         <HeaderComponent newEntryPage={true}/>
         <div className="newPGEntryFormContainer">
-            <Input value={name} onChange={(e) => setName(e.target.value)} width='60%' placeholder="Enter your Name" marginBottom={5} marginTop={5}/>
             <Input value={comment} onChange={(e) => setComment(e.target.value)} width='60%' placeholder="Enter your Comment" marginBottom={5} marginTop={5}/>
             <Box width='60%' marginBottom={5} marginTop={5}>
                 <Text>Room Condition</Text>

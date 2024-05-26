@@ -44,4 +44,24 @@ const userLogin = async(email, password) => {
     }
 }
 
-export { userRegistration, userLogin }
+//API call to get username of the user
+const usernameAPICall = async(userId) => {
+    try{
+        const result = await fetch(`${baseURL}/username`, {
+            method: 'POST',
+            body: JSON.stringify({
+                userId: userId
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        })
+        const sendingResult = await result.json()
+        return sendingResult.username
+    }
+    catch(err) {
+        console.log(err)
+    }
+}
+
+export { userRegistration, userLogin, usernameAPICall }

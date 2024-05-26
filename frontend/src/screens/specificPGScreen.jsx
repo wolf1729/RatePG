@@ -6,12 +6,16 @@ import HeaderComponent from "../components/header"
 import { Image, Text, Stack, Kbd, Button, Divider } from "@chakra-ui/react"
 import { useNavigate } from 'react-router-dom'
 import { showComment } from '../../utils/commentAPICalls'
+import Cookies from 'js-cookie';
 
 function SpecificPGScreen() {
     const { pgID } = useParams()
     const navigate = useNavigate()
     const [pgDetails, setPGDetails] = useState([])
     const [comments, setComments] = useState([])
+    const [isVerfied, setIsVerified] = useState(false)
+    // eslint-disable-next-line no-unused-vars
+    const [userId, setUserId] = useState('')
 
     useEffect(() => {
         const gettingPGDetails = async() => {
@@ -43,6 +47,24 @@ function SpecificPGScreen() {
         getAllComments()
     }, [])
 
+    useEffect(() => {
+        const gettingUserId = () => {
+            try{
+                return Cookies.get('userId')
+            }
+            catch(err) {
+                console.log(err)
+            }
+        }
+        
+        const data = gettingUserId()
+        setUserId(data)
+        if(data){
+            setIsVerified(true)
+        }
+    }, [])
+    
+
     const calculateTotalRating = (ratingArray) => {
         if (!ratingArray || ratingArray.length === 0) return 0;
         let overallRating = 0;
@@ -68,6 +90,20 @@ function SpecificPGScreen() {
                 <Text fontSize={15}>{e.comment}</Text>
             </Stack>
         )
+    }
+
+    const addingComment = () => {
+        try{
+            if(isVerfied){
+                navigate(`/newComment/${pgID}`)
+            }
+            else{
+                navigate('/loginRegistration')
+            }
+        }
+        catch(err){
+            console.log(err)
+        }
     }
 
     return (
@@ -97,7 +133,7 @@ function SpecificPGScreen() {
             <div className='comments'>
                 <Stack display='flex' flexDir='row' flexWrap='wrap' alignItems='center' justifyContent='space-between' marginBottom={5}>
                     <Text fontWeight={900} fontSize={20}>Comments</Text>
-                    <Button colorScheme='teal' onClick={() => navigate(`/newComment/${pgID}`)}>Add Comments and Rating</Button>
+                    <Button colorScheme='teal' onClick={() => addingComment()}>Add Comments and Rating</Button>
                 </Stack>
                 <Divider />
                 <Stack>
