@@ -10,19 +10,23 @@ function SearchScreen() {
     const [searchOption, setSearchOption] = useState('None');
     const [searchText, setSearchText] = useState('');
     const [pgDetails, setPGDetails] = useState([]);
+    // eslint-disable-next-line no-unused-vars
+    const [verified, setVerified] = useState(true)
 
     useEffect(() => {
         const fetchPGDetails = async () => {
             try {
                 const details = await allPG();
                 setPGDetails(details);
-                console.log(details)
             } catch (err) {
                 console.log(err);
             }
         };
-        fetchPGDetails();
+
+        fetchPGDetails()
+        
     }, []);
+    
 
     const calculateOverallRating = (overallRatingArray) => {
         let overallRating = 0
@@ -35,14 +39,14 @@ function SearchScreen() {
 
     return (
         <>
-            <HeaderComponent searchScreen={true} />
+            <HeaderComponent searchScreen={true} isVerified={verified}/>
             <div className="mainPageSearchContainer">
-                <Select value={searchOption} onChange={(e) => setSearchOption(e.target.value)} size='md' width={36}>
+                <Select value={searchOption} onChange={(e) => setSearchOption(e.target.value)} size={['xs', 'md']} width={[59, 36]}>
                     <option value='name'>Name</option>
                     <option value='location'>Location</option>
                 </Select>
-                <Input value={searchText} onChange={(e) => setSearchText(e.target.value)} size='md' width='75%' placeholder='Search Your PG' />
-                <Button colorScheme="blue">Search</Button>
+                <Input value={searchText} onChange={(e) => setSearchText(e.target.value)} size={['xs', 'md']} width={['60%', '75%']} placeholder='Search Your PG' />
+                <Button colorScheme="blue" size={['xs', 'md']}>Search</Button>
             </div>
             <div className='mainPageSearchResultContainer'>
                 {pgDetails.map((pg, index) => (

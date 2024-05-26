@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const pgRoutes = require('../backend/routes/pgRoutes')
 const commentRoutes = require('../backend/routes/commentRoutes')
+const userRoutes = require('../backend/routes/userRoutes')
 require('dotenv').config();
 
 const app = express()
@@ -31,6 +32,7 @@ const connectDB = async (dbURL) => {
 //ROUTES
 app.use('/pgRoutes', pgRoutes)
 app.use('/commentRoutes', commentRoutes)
+app.use('/userRoutes', userRoutes)
 
 //SERVER STARTER
 app.listen(port, async() => {
