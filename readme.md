@@ -54,22 +54,22 @@ The PG Finder and Rating Platform is a web application designed to help users fi
 
 ## 📦 Features
 
-# User Registration and Authentication 
+1. User Registration and Authentication 
 Users can register, log in, and manage their profiles. Secure authentication ensures that only verified users can post reviews and ratings.
 
-# Search Functionality
+2. Search Functionality
 Users can search for PGs based on specific criteria such as name and location. The search functionality is designed to be intuitive and fast, providing relevant results quickly.
 
-# PG Listing
+3. PG Listing
 The platform displays detailed listings of PG accommodations, including images, location, amenities, and user ratings. Each listing provides a comprehensive overview to help users make informed decisions.
 
-# Ratings and Reviews
+4. Ratings and Reviews
 Users can rate PGs based on various criteria (e.g., room quality, bathroom cleanliness, location) and leave detailed reviews. This user-generated content is crucial for maintaining accurate and up-to-date information.
 
-# Overall Rating Calculation
+5. Overall Rating Calculation
 The platform calculates the overall rating for each PG based on individual ratings. This provides a quick reference for users to gauge the quality of accommodations.
 
-# Responsive Design
+6. Responsive Design
 The application is designed to be responsive, ensuring a seamless experience across different devices, including desktops, tablets, and smartphones.
 
 ---
