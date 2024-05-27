@@ -5,10 +5,9 @@
     <h1 align="center">RATEPG</h1>
 </p>
 <p align="center">
-    <em>HTTP error 401 for prompt `slogan`</em>
+    <em>Find Your Perfect PG, Rated by Real Experiences!</em>
 </p>
 <p align="center">
-	<img src="https://img.shields.io/github/license/wolf1729/RatePG?style=flat&color=0080ff" alt="license">
 	<img src="https://img.shields.io/github/last-commit/wolf1729/RatePG?style=flat&logo=git&logoColor=white&color=0080ff" alt="last-commit">
 	<img src="https://img.shields.io/github/languages/top/wolf1729/RatePG?style=flat&color=0080ff" alt="repo-top-language">
 	<img src="https://img.shields.io/github/languages/count/wolf1729/RatePG?style=flat&color=0080ff" alt="repo-language-count">
@@ -278,22 +277,6 @@ cd RatePG
 npm install
 ```
 
-### 🤖 Running RatePG
-
-Use the following command to run RatePG:
-
-```sh
-node app.js
-```
-
-### 🧪 Tests
-
-To execute tests, run:
-
-```sh
-npm test
-```
-
 ---
 
 ## 🛠 Project Roadmap
@@ -338,12 +321,6 @@ Contributions are welcome! Here are several ways you can contribute:
 Once your PR is reviewed and approved, it will be merged into the main branch.
 
 </details>
-
----
-
-## 📄 License
-
-This project is protected under the [SELECT-A-LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
 
 ---
 
