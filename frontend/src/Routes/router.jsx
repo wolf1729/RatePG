@@ -5,6 +5,7 @@ import NewPGEntryScreen from "../screens/newPGEntryScreen";
 import SpecificPGScreen from "../screens/specificPGScreen";
 import NewCommentScreen from "../screens/addCommentScreen";
 import LoginRegistrationScreen from "../screens/loginRegistrationScreen";
+import FAQScreen from "../screens/faqScreen";
 
 const Router = () => {
     const router = createBrowserRouter([
@@ -31,6 +32,10 @@ const Router = () => {
         {
             path: '/loginRegistration',
             element: <LoginRegistrationScreen />
+        },
+        {
+            path: '/FAQ',
+            element: <FAQScreen />
         }
     ]);
 

@@ -70,7 +70,7 @@ function HeaderComponent({ searchScreen = false, newEntryPage = false, isVerifie
             return <Button colorScheme='green' paddingLeft={8} paddingRight={8} onClick={() => navigation('/search')} size={['xs', 'md']}>Search Your PG</Button>
         }
         else {
-            return <Button colorScheme='orange' paddingLeft={8} paddingRight={8} size={['xs', 'md']}>FAQ</Button>
+            return <Button colorScheme='orange' paddingLeft={8} paddingRight={8} size={['xs', 'md']} onClick={() => navigation('/FAQ')}>FAQ</Button>
         }
     }
 
