@@ -12,7 +12,6 @@ function SearchScreen() {
     const [searchOption, setSearchOption] = useState('None');
     const [searchText, setSearchText] = useState('');
     const [pgDetails, setPGDetails] = useState([]);
-    // eslint-disable-next-line no-unused-vars
     const [verified, setVerified] = useState(false)
     // eslint-disable-next-line no-unused-vars
     const [userId, setUserId] = useState('')
