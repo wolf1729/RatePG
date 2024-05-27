@@ -38,10 +38,7 @@
 > - [🚀 Getting Started](#-getting-started)
 >   - [⚙️ Installation](#️-installation)
 >   - [🤖 Running RatePG](#-running-RatePG)
->   - [🧪 Tests](#-tests)
-> - [🛠 Project Roadmap](#-project-roadmap)
 > - [🤝 Contributing](#-contributing)
-> - [📄 License](#-license)
 > - [👏 Acknowledgments](#-acknowledgments)
 
 ---
