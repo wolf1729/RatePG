@@ -54,17 +54,23 @@ The PG Finder and Rating Platform is a web application designed to help users fi
 
 ## 📦 Features
 
-**User Registration and Authentication: Users can register, log in, and manage their profiles. Secure authentication ensures that only verified users can post reviews and ratings.
+## User Registration and Authentication 
+Users can register, log in, and manage their profiles. Secure authentication ensures that only verified users can post reviews and ratings.
 
-Search Functionality: Users can search for PGs based on specific criteria such as name and location. The search functionality is designed to be intuitive and fast, providing relevant results quickly.
+## Search Functionality
+Users can search for PGs based on specific criteria such as name and location. The search functionality is designed to be intuitive and fast, providing relevant results quickly.
 
-PG Listings: The platform displays detailed listings of PG accommodations, including images, location, amenities, and user ratings. Each listing provides a comprehensive overview to help users make informed decisions.
+## PG Listing
+The platform displays detailed listings of PG accommodations, including images, location, amenities, and user ratings. Each listing provides a comprehensive overview to help users make informed decisions.
 
-Ratings and Reviews: Users can rate PGs based on various criteria (e.g., room quality, bathroom cleanliness, location) and leave detailed reviews. This user-generated content is crucial for maintaining accurate and up-to-date information.
+## Ratings and Reviews
+Users can rate PGs based on various criteria (e.g., room quality, bathroom cleanliness, location) and leave detailed reviews. This user-generated content is crucial for maintaining accurate and up-to-date information.
 
-Overall Rating Calculation: The platform calculates the overall rating for each PG based on individual ratings. This provides a quick reference for users to gauge the quality of accommodations.
+## Overall Rating Calculation
+The platform calculates the overall rating for each PG based on individual ratings. This provides a quick reference for users to gauge the quality of accommodations.
 
-Responsive Design: The application is designed to be responsive, ensuring a seamless experience across different devices, including desktops, tablets, and smartphones.
+## Responsive Design
+The application is designed to be responsive, ensuring a seamless experience across different devices, including desktops, tablets, and smartphones.
 
 ---
 
