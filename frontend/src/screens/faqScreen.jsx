@@ -1,17 +1,17 @@
 import HeaderComponent from "../components/header"
-import { Stack, Accordion, AccordionButton, AccordionItem, AccordionPanel, AccordionIcon, Box } from '@chakra-ui/react'
+import { Stack, Accordion, AccordionButton, AccordionItem, AccordionPanel, AccordionIcon, Box, Text } from '@chakra-ui/react'
 
 function FAQScreen() {
     return (
         <>
         <HeaderComponent newEntryPage={true}/>
-        <Stack display='flex' flexDir='column'>
-            <Accordion defaultIndex={[0]} allowMultiple>
+        <Stack display='flex' flexDir='column' marginLeft={150} marginRight={150} marginTop={30}>
+            <Accordion defaultIndex={[0]} >
                 <AccordionItem>
                     <h2>
                         <AccordionButton>
                             <Box as='span' flex='1' textAlign='left'>
-                                What is this website about?
+                                <Text fontWeight={600}>What is this website about?</Text>
                             </Box>
                             <AccordionIcon />
                         </AccordionButton>
@@ -27,7 +27,7 @@ function FAQScreen() {
                     <h2>
                     <AccordionButton>
                         <Box as='span' flex='1' textAlign='left'>
-                            Do I need to create an account to use the website?
+                            <Text fontWeight={600}>Do I need to create an account to use the website?</Text>
                         </Box>
                         <AccordionIcon />
                     </AccordionButton>
@@ -42,7 +42,7 @@ function FAQScreen() {
                     <h2>
                     <AccordionButton>
                         <Box as='span' flex='1' textAlign='left'>
-                            How are the PGs rated on your website?
+                            <Text fontWeight={600}>How are the PGs rated on your website?</Text>
                         </Box>
                         <AccordionIcon />
                     </AccordionButton>
@@ -57,7 +57,7 @@ function FAQScreen() {
                     <h2>
                     <AccordionButton>
                         <Box as='span' flex='1' textAlign='left'>
-                            Can I leave a review for a PG I have stayed in?
+                            <Text fontWeight={600}>Can I leave a review for a PG I have stayed in?</Text>
                         </Box>
                         <AccordionIcon />
                     </AccordionButton>
@@ -72,7 +72,7 @@ function FAQScreen() {
                     <h2>
                     <AccordionButton>
                         <Box as='span' flex='1' textAlign='left'>
-                            How is my personal information protected?
+                            <Text fontWeight={600}>How is my personal information protected?</Text>
                         </Box>
                         <AccordionIcon />
                     </AccordionButton>
@@ -86,7 +86,7 @@ function FAQScreen() {
                     <h2>
                     <AccordionButton>
                         <Box as='span' flex='1' textAlign='left'>
-                            Are there any additional fees for using your website?
+                            <Text fontWeight={600}>Are there any additional fees for using your website?</Text>
                         </Box>
                         <AccordionIcon />
                     </AccordionButton>
