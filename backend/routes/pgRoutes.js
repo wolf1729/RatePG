@@ -14,4 +14,7 @@ pgRouter.post('/PGSearchUsingID', pgController.searchPGUsingID)
 //Route to update value based on new comments
 pgRouter.post('/commentUpdateValue', pgController.updateValueBasedOnComment)
 
+//Route to search specific PG
+pgRouter.post('/searchName', pgController.findPGName)
+
 module.exports = pgRouter

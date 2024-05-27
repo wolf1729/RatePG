@@ -76,4 +76,18 @@ const updateValueBasedOnComment = asyncHandler(async(req, res) => {
     }
 })
 
-module.exports = { addNewPG, showAllPG, searchPGUsingID, updateValueBasedOnComment }
+//Controller to find specific PG
+const findPGName = asyncHandler(async(req, res) => {
+    const { pgName } = req.body
+
+    try{
+        const result = await pgModel.find({ pgName: pgName })
+        res.send(result)
+    }
+    catch(err){
+        console.log(err)
+        res.json({ status: false })
+    }
+})
+
+module.exports = { addNewPG, showAllPG, searchPGUsingID, updateValueBasedOnComment, findPGName }

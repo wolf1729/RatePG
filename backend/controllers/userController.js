@@ -52,4 +52,18 @@ const userLogin = asyncHandler(async(req, res) => {
     }
 })
 
-module.exports = { userRegistration, userLogin }
+//Controller to get Username
+const usernameController = asyncHandler(async(req, res) => {
+    const { userId } = req.body
+
+    try{
+        const result = await userModel.findOne({ _id: userId })
+        res.json({ username: result.username })
+    }
+    catch(err) {
+        console.log(err)
+        res.json({ status: false })
+    }
+})
+
+module.exports = { userRegistration, userLogin, usernameController }
