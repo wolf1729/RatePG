@@ -1,4 +1,5 @@
-const baseURL = 'http://localhost:3000/userRoutes'
+// const baseURL = 'http://localhost:3000/userRoutes'
+const baseURL = "https://ratepg-backend.onrender.com/userRoutes"
 
 //User Registration API calls
 const userRegistration = async(username, email, password) => {
