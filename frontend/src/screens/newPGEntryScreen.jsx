@@ -12,6 +12,7 @@ import { TbAirConditioning } from "react-icons/tb";
 import { addNewPG } from '../../utils/pgAPICalls';
 import { uploadFileInStorage } from '../../utils/firebaseFunctions';
 import { useNavigate } from 'react-router-dom';
+import notAvailable from '../assets/noAvailable.jpg'
 
 function NewPGEntryScreen() {
     const navigate = useNavigate()
@@ -24,7 +25,7 @@ function NewPGEntryScreen() {
     const [overallRating, setOverallRating] = useState([])
     const [price, setPrice] = useState()
     const [facilities, setFacilities] = useState([])
-    const [imageFile, setImageFile] = useState('')
+    const [imageFile, setImageFile] = useState(notAvailable)
 
     const addNewPGFunction = async() => {
         if (pgName === '' && pgLocation === ''){
