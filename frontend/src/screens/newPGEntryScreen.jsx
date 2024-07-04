@@ -25,7 +25,7 @@ function NewPGEntryScreen() {
     const [overallRating, setOverallRating] = useState([])
     const [price, setPrice] = useState()
     const [facilities, setFacilities] = useState([])
-    const [imageFile, setImageFile] = useState()
+    const [imageFile, setImageFile] = useState(null)
 
     const addNewPGFunction = async() => {
         if (pgName === '' && pgLocation === ''){
@@ -38,7 +38,10 @@ function NewPGEntryScreen() {
             })
         }
         try {
-            const imageURL = await uploadFileInStorage(imageFile || notAvailable, pgName)
+            if (imageFile) {
+                imageURL = await uploadFileInStorage(imageFile, pgName);
+            }
+            let imageURL = await uploadFileInStorage(notAvailable, pgName)
             const result = await addNewPG(pgName, pgLocation, roomCondition, bathroomCondition, locationConvenience, overallRating, price, facilities, imageURL)
             toast({
                 title: 'Success',
