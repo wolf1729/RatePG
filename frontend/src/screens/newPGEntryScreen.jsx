@@ -12,7 +12,7 @@ import { TbAirConditioning } from "react-icons/tb";
 import { addNewPG } from '../../utils/pgAPICalls';
 import { uploadFileInStorage } from '../../utils/firebaseFunctions';
 import { useNavigate } from 'react-router-dom';
-import notAvailable from '../assets/noAvailable.jpg'
+import notAvailable from '../assets/noAvailable.png'
 
 function NewPGEntryScreen() {
     const navigate = useNavigate()
