@@ -1,5 +1,5 @@
-const baseURL = "http://localhost:3000/pgRoutes"
-// const baseURL = "https://ratepg-backend.onrender.com/pgRoutes"
+// const baseURL = "http://localhost:3000/pgRoutes"
+const baseURL = "https://ratepg-backend.onrender.com/pgRoutes"
 
 //API call to add new PG details
 const addNewPG = async(pgName, pgLocation, roomCondition, bathroomCondition, locationConvenience, overallRating, price, facilites, pgImage) => {
