@@ -86,7 +86,7 @@ function SearchScreen() {
             </div>
             <div className='mainPageSearchResultContainer'>
                 {pgDetails.map((pg, index) => (
-                    <Card key={index} maxW='sm' shadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' marginTop={10} marginLeft={5} marginRight={5}>
+                    <Card key={index} maxW='sm' shadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' marginTop={10} marginLeft={2} marginRight={2}>
                         <CardBody>
                             <Stack display='flex' alignItems='center' justifyContent='center'>
                                 <Image

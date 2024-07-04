@@ -2,7 +2,7 @@
 import '../styles/newPGEntryScreenStyle.css'
 import { useState } from "react"
 import HeaderComponent from "../components/header"
-import { Input, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Box, Text, CheckboxGroup, Checkbox, Stack, Button, useToast } from "@chakra-ui/react"
+import { Input, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Box, Text, CheckboxGroup, Checkbox, Stack, Button, useToast, Image } from "@chakra-ui/react"
 import { GiHotMeal, GiClothes } from "react-icons/gi";
 import { PiHouseLight, PiSecurityCameraFill, PiMapPinSimpleAreaBold, PiTelevisionSimpleFill } from "react-icons/pi";
 import { FaWifi } from "react-icons/fa";
@@ -12,9 +12,10 @@ import { TbAirConditioning } from "react-icons/tb";
 import { addNewPG } from '../../utils/pgAPICalls';
 import { uploadFileInStorage } from '../../utils/firebaseFunctions';
 import { useNavigate } from 'react-router-dom';
-import notAvailable from '../assets/noAvailable.png'
+import notAvailableImage from '../assets/noAvailable.jpg'
 
 function NewPGEntryScreen() {
+    const imageToUse = notAvailableImage
     const navigate = useNavigate()
     const toast = useToast()
     const [pgName, setPGName] = useState('')
@@ -36,12 +37,23 @@ function NewPGEntryScreen() {
                 duration: 3000,
                 isClosable: true,
             })
+            return
         }
+
+        // if (imageFile === null){
+        //     toast({
+        //         title: 'Error',
+        //         description: "Please Provide an Image",
+        //         status: 'warning',
+        //         duration: 3000,
+        //         isClosable: true,
+        //     })
+        //     return
+        // }
+
         try {
-            if (imageFile) {
-                imageURL = await uploadFileInStorage(imageFile, pgName);
-            }
-            let imageURL = await uploadFileInStorage(notAvailable, pgName)
+            const imageToUpload = imageFile===null ? imageFile :  imageToUse
+            const imageURL = await uploadFileInStorage(imageToUpload, pgName);
             const result = await addNewPG(pgName, pgLocation, roomCondition, bathroomCondition, locationConvenience, overallRating, price, facilities, imageURL)
             toast({
                 title: 'Success',

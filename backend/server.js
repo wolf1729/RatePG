@@ -12,14 +12,14 @@ const app = express()
 const port = process.env.PORT
 const databaseURL = process.env.MONGO_URL
 
-const corsOption = {
-  origin: "https://ratepg.onrender.com"
-}
+// const corsOption = {
+//   origin: "https://ratepg.onrender.com"
+// }
 
 //MIDDLEWARES
 app.use(express.json())
-// app.use(cors())
-app.use(cors(corsOption))
+app.use(cors())
+// app.use(cors(corsOption))
 
 //DATABASE CONNECTION FUNCTION
 const connectDB = async (dbURL) => {
