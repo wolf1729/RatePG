@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import '../styles/newPGEntryScreenStyle.css'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import HeaderComponent from "../components/header"
 import { Input, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Box, Text, CheckboxGroup, Checkbox, Stack, Button, useToast, Image } from "@chakra-ui/react"
 import { GiHotMeal, GiClothes } from "react-icons/gi";
@@ -13,6 +13,7 @@ import { addNewPG } from '../../utils/pgAPICalls';
 import { uploadFileInStorage } from '../../utils/firebaseFunctions';
 import { useNavigate } from 'react-router-dom';
 import notAvailableImage from '../assets/noAvailable.jpg'
+import { Modal, ModalOverlay, ModalCloseButton, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from '@chakra-ui/react';
 
 function NewPGEntryScreen() {
     const imageToUse = notAvailableImage
@@ -27,6 +28,37 @@ function NewPGEntryScreen() {
     const [price, setPrice] = useState()
     const [facilities, setFacilities] = useState([])
     const [imageFile, setImageFile] = useState(null)
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const [possibleLocations, setPossibleLocations] = useState([])
+    const api_key = import.meta.env.VITE_OLA_MAPS_API_KEY
+
+    const apiHitting = async(searchText) => {
+        try{
+            // let b = searchText.split(" ")
+            // let urlSearchText = ""
+            // for(let i=0; i<b.length; i++) {
+            //     if (i === b.length-1){
+            //         urlSearchText += b[i]
+            //         break
+            //     }
+            //     urlSearchText += b[i] + "%20"
+            // }
+            const urlSearchText = encodeURIComponent(searchText.trim())
+            const apiURL = `https://api.olamaps.io/places/v1/autocomplete?input=${urlSearchText}&api_key=${api_key}`
+            const hittingAPI = await fetch(apiURL)
+            const gettingData = await hittingAPI.json()
+            console.log(gettingData.predictions)
+            await setPossibleLocations(gettingData)
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
+
+    const locationButtonClick = async() => {
+        await apiHitting(pgLocation)
+        onOpen()
+    }
 
     const addNewPGFunction = async() => {
         if (pgName === '' && pgLocation === ''){
@@ -39,17 +71,6 @@ function NewPGEntryScreen() {
             })
             return
         }
-
-        // if (imageFile === null){
-        //     toast({
-        //         title: 'Error',
-        //         description: "Please Provide an Image",
-        //         status: 'warning',
-        //         duration: 3000,
-        //         isClosable: true,
-        //     })
-        //     return
-        // }
 
         try {
             const imageToUpload = imageFile===null ? imageFile :  imageToUse
@@ -79,7 +100,24 @@ function NewPGEntryScreen() {
         <HeaderComponent newEntryPage={true}/>
         <div className="newPGEntryFormContainer">
             <Input value={pgName} onChange={(e) => setPGName(e.target.value)} width='60%' placeholder="Enter your PG Name" marginBottom={5} marginTop={5}/>
-            <Input value={pgLocation} onChange={(e) => setPGLocation(e.target.value)} width='60%' placeholder="Enter your PG Location" marginBottom={5} marginTop={5}/>
+            <Stack display='flex' flexDir='row' alignContent='center' justifyContent='space-evenly' marginTop={5} width='60%'>
+                <Input value={pgLocation} onChange={(e) => setPGLocation(e.target.value)} width='90%' placeholder="Enter your PG Location" marginBottom={5} />
+                <Button colorScheme='blackAlpha' onClick={() => locationButtonClick()}>Search</Button>
+                <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
+                    <ModalOverlay />
+                    <ModalContent>
+                        <ModalHeader>Select Location</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody pb={6}>
+
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button colorScheme='blue' mr={3}>Save</Button>
+                            <Button onClick={onClose}>Cancel</Button>
+                        </ModalFooter>
+                    </ModalContent>
+                </Modal>
+            </Stack>
             <Box width='60%' marginBottom={5} marginTop={5}>
                 <Text>Room Condition</Text>
                 <Slider min={0} max={5} step={1} defaultValue={0} onChange={(e) => setRoomCondition(e)}>
@@ -143,5 +181,14 @@ function NewPGEntryScreen() {
         </>
     )
 } 
+
+function LocationDialog() {
+    
+    return (
+        <>
+        
+        </>
+    )
+}
 
 export default NewPGEntryScreen
