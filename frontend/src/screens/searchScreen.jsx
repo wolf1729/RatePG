@@ -108,7 +108,7 @@ function SearchScreen() {
         else if(searchOption === 'location') {
             return (
                 <>
-                    <span style={{ display: 'block', textAlign: 'left' }}>{item.pgLocation}</span>
+                    <span style={{ display: 'block', textAlign: 'left', height: 'fit-content' }}>{item.pgLocation}</span>
                 </>
             )
         }
@@ -122,7 +122,7 @@ function SearchScreen() {
                     <option value='name'>Name</option>
                     <option value='location'>Location</option>
                 </Select>
-                <Stack size={['xs', 'md']} width={['60%', '75%']} height='fit-content'>
+                <Stack size={['xs', 'md']} width={['60%', '75%']} height='fit-content' zIndex={10}>
                     <ReactSearchAutocomplete
                         items={pgDetails}
                         onSearch={handleOnSearch}
