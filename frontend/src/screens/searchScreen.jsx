@@ -122,7 +122,7 @@ function SearchScreen() {
                     <option value='name'>Name</option>
                     <option value='location'>Location</option>
                 </Select>
-                <Stack size={['xs', 'md']} width={['60%', '75%']}>
+                <Stack size={['xs', 'md']} width={['60%', '75%']} height='fit-content'>
                     <ReactSearchAutocomplete
                         items={pgDetails}
                         onSearch={handleOnSearch}
