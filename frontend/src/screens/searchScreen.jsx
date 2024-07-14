@@ -11,7 +11,7 @@ import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 function SearchScreen() {
     const navigate = useNavigate();
     const toast = useToast();
-    const [searchOption, setSearchOption] = useState('None');
+    const [searchOption, setSearchOption] = useState('name');
     const [searchText, setSearchText] = useState('');
     const [pgDetails, setPGDetails] = useState([]);
     const [verified, setVerified] = useState(false);
