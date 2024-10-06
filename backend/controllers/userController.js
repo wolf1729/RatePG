@@ -1,6 +1,10 @@
 const userModel = require('../models/userModel')
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+require('dotenv').config()
+
+const jwtSecret = process.env.JWT_SECRET;
 
 //User Registeration Controller
 const userRegistration = asyncHandler(async(req, res) => {
@@ -35,20 +39,33 @@ const userLogin = asyncHandler(async(req, res) => {
 
     try{
         const oldUser = await userModel.findOne({ email: email })
-        if(!oldUser) {
-            res.json({ status: "noUser" })
-        }
+        
+        if (!oldUser) return res.status(404).send('User not found');
 
         const validPassword = await bcrypt.compare(password, oldUser.password);
-        if (!validPassword){
-            res.json({ status: "noUser" })
-        }
+        if (!validPassword) return res.status(401).send('Wrong password');
 
-        res.json({ userId: oldUser._id })
+        const token = await jwt.sign(
+            {
+                username: oldUser.username,
+                id: oldUser._id
+            },
+            jwtSecret,
+            { expiresIn: '48h' }
+        )
+
+        res.status(200).json({
+            success: true,
+            data: {
+                token: token,
+                username: oldUser.username,
+                userId: oldUser._id
+            }
+        })
     }
     catch(err) {
         console.log(err)
-        res.json({ status: false })
+        res.status(500).send('Internal Server Error')
     }
 })
 
