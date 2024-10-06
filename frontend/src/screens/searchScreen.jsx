@@ -137,7 +137,7 @@ function SearchScreen() {
             </div>
             <div className='mainPageSearchResultContainer'>
                 {pgDetails.map((pg, index) => (
-                    <Card key={index} maxW='sm' shadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' marginTop={10} marginLeft={2} marginRight={2}>
+                    <Card key={index} width={['150px', '350px']} height={['250px', '500px']} shadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' marginTop={10} marginLeft={2} marginRight={2}>
                         <CardBody>
                             <Stack display='flex' alignItems='center' justifyContent='center'>
                                 <Image
@@ -146,15 +146,15 @@ function SearchScreen() {
                                     borderRadius='lg'
                                 />
                             </Stack>
-                            <Stack mt='6' spacing='3'>
-                                <Heading size='lg'>{pg.name}</Heading>
-                                <Text>{pg.pgLocation}</Text>
-                                <Text color='blue.600' fontSize={20}>Rating : {calculateOverallRating(pg.overallRating)}/5.0</Text>
+                            <Stack mt={['1', '6']}>
+                                <Heading fontSize={['15px', '30px']}>{pg.name}</Heading>
+                                <Text fontSize={['10px', '20px']}>{pg.pgLocation}</Text>
+                                <Text color='blue.600' fontSize={['10px', '20px']}>Rating : {calculateOverallRating(pg.overallRating)}/5.0</Text>
                             </Stack>
                         </CardBody>
-                        <CardFooter>
-                            <ButtonGroup spacing='2'>
-                                <Button variant='solid' colorScheme='blue' onClick={() => navigate(`/pgDetails/${pg._id}`)}>Show Details</Button>
+                        <CardFooter position='absolute' bottom='0' left='0'>
+                            <ButtonGroup>
+                                <Button variant='solid' size={['xs', 'lg']} colorScheme='blue' onClick={() => navigate(`/pgDetails/${pg._id}`)}>Show Details</Button>
                             </ButtonGroup>
                         </CardFooter>
                     </Card>
