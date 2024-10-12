@@ -18,7 +18,7 @@ function LoginComponent() {
 
         if (loginUser.fulfilled.match(resultAction)) {
             toast({
-                description: `Welcome, User ID: ${resultAction.payload.userId}!`,
+                description: `Welcome, ${resultAction.payload.data.username}!`,
                 status: 'success',
                 duration: 3000,
                 isClosable: true,

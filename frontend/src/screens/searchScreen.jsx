@@ -5,18 +5,23 @@ import { useState, useEffect } from "react";
 import HeaderComponent from '../components/header';
 import { allPG, findPGName } from '../../utils/pgAPICalls';
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
+import { useSelector } from 'react-redux';
 
 function SearchScreen() {
     const navigate = useNavigate();
     const toast = useToast();
+    
     const [searchOption, setSearchOption] = useState('name');
     const [searchText, setSearchText] = useState('');
     const [pgDetails, setPGDetails] = useState([]);
-    const [verified, setVerified] = useState(false);
-    const [userId, setUserId] = useState('');
 
+    // Access Redux state
+    const user = useSelector((state) => state.user);
+    const { status } = user;
+    const verified = status === 'succeeded';
+
+    // Fetch PG details when the component mounts
     useEffect(() => {
         const fetchPGDetails = async () => {
             try {
@@ -38,22 +43,6 @@ function SearchScreen() {
         fetchPGDetails();
     }, []);
 
-    useEffect(() => {
-        const gettingUserId = () => {
-            try {
-                return Cookies.get('userId');
-            } catch (err) {
-                console.log(err);
-            }
-        };
-
-        const data = gettingUserId();
-        setUserId(data);
-        if (data) {
-            setVerified(true);
-        }
-    }, []);
-
     const calculateOverallRating = (overallRatingArray) => {
         let overallRating = 0;
         for (let i = 0; i < overallRatingArray.length; i++) {
@@ -62,7 +51,7 @@ function SearchScreen() {
         return (overallRating / overallRatingArray.length).toFixed(1);
     };
 
-    const searchButtonFunction = async (pgName) => {
+    const searchButtonFunction = async () => {
         try {
             if (searchText === '') {
                 toast({
@@ -73,8 +62,8 @@ function SearchScreen() {
                 });
                 return;
             }
-            const newData = await findPGName(pgName)
-            await setPGDetails(newData)
+            const newData = await findPGName(searchText);
+            setPGDetails(newData);
         } catch (err) {
             console.log(err);
         }
@@ -90,7 +79,7 @@ function SearchScreen() {
     };
 
     const handleOnSelect = (item) => {
-        setSearchText(item)
+        setSearchText(item.name || item.pgLocation);  // Modify depending on the search option
     };
 
     const handleOnFocus = () => {
@@ -99,18 +88,9 @@ function SearchScreen() {
 
     const formatResult = (item) => {
         if (searchOption === 'name') {
-            return (
-                <>
-                    <span style={{ display: 'block', textAlign: 'left' }}>{item.name}</span>
-                </>
-            )
-        }
-        else if(searchOption === 'location') {
-            return (
-                <>
-                    <span style={{ display: 'block', textAlign: 'left', height: 'fit-content' }}>{item.pgLocation}</span>
-                </>
-            )
+            return <span style={{ display: 'block', textAlign: 'left' }}>{item.name}</span>;
+        } else if (searchOption === 'location') {
+            return <span style={{ display: 'block', textAlign: 'left' }}>{item.pgLocation}</span>;
         }
     };
 
@@ -133,7 +113,7 @@ function SearchScreen() {
                         formatResult={formatResult}
                     />
                 </Stack>
-                <Button colorScheme="blue" size={['xs', 'md']} onClick={() => searchButtonFunction()}>Search</Button>
+                <Button colorScheme="blue" size={['xs', 'md']} onClick={searchButtonFunction}>Search</Button>
             </div>
             <div className='mainPageSearchResultContainer'>
                 {pgDetails.map((pg, index) => (
