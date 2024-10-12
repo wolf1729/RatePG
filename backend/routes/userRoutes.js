@@ -1,6 +1,7 @@
 const express = require('express')
 const userRouter = express.Router()
 const userController = require('../controllers/userController')
+const verifyToken = require('../utils/verifyToken')
 
 //New user registration Route
 userRouter.post('/userRegistration', userController.userRegistration)
@@ -9,6 +10,6 @@ userRouter.post('/userRegistration', userController.userRegistration)
 userRouter.post('/userLogin', userController.userLogin)
 
 //Route to get username
-userRouter.post('/username', userController.usernameController)
+userRouter.post('/username', verifyToken.verifyToken,  userController.usernameController)
 
 module.exports = userRouter
