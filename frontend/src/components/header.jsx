@@ -1,17 +1,19 @@
 /* eslint-disable react/prop-types */
 import '../styles/homePageHeaderStyle.css'
-import { Avatar, Button, Stack, Text, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react'
+import { Avatar, Button, Stack, Text, Drawer, DrawerBody, DrawerOverlay, DrawerCloseButton, DrawerHeader, DrawerFooter, DrawerContent, useDisclosure, Divider } from '@chakra-ui/react'
 import { MdAir } from "react-icons/md";
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie';
 import { GoPerson } from "react-icons/go";
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { usernameAPICall } from '../../utils/userAPICalls';
 
 function HeaderComponent({ searchScreen = false, newEntryPage = false, isVerified = false }) {
     const navigation = useNavigate()
     const [username, setUsername] = useState('')
     const [userId, setUserId] = useState('')
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const btnRef = useRef()
 
     useEffect(() => {
         const gettingUsername = async() => {
@@ -45,18 +47,37 @@ function HeaderComponent({ searchScreen = false, newEntryPage = false, isVerifie
     const buttonFunction = () => {
         if (searchScreen === true) {
             if (isVerified === true){
-                return <Menu>
-                            <MenuButton >
-                                <Stack display='flex' flexDir='row' flexWrap='wrap' alignItems='center' justifyContent='space-evenly'>
-                                    <Avatar size='sm' src={<GoPerson />} />
-                                    <Text fontSize={[15, 25]}>{username}</Text>
-                                </Stack>
-                            </MenuButton>
-                            <MenuList>
-                                <MenuItem onClick={() => addNewPGFunction()}>Add Your PG</MenuItem>
-                                <MenuItem onClick={() => logoutFunction()}>LogOut</MenuItem>
-                            </MenuList>
-                        </Menu>
+                return (
+                    <div>
+                        <Stack display='flex' flexDir='row' flexWrap='wrap' alignItems='center' justifyContent='space-evenly' ref={btnRef} onClick={onOpen}>
+                            <Avatar size='sm' src={<GoPerson />} />
+                            <Text fontSize={[15, 25]}>{username}</Text>
+                        </Stack>
+                        <Drawer
+                            isOpen={isOpen}
+                            placement='right'
+                            onClose={onClose}
+                            finalFocusRef={btnRef}
+                        >
+                            <DrawerOverlay />
+                            <DrawerContent>
+
+                                <DrawerBody marginTop={5}>
+                                    <Text textAlign='center' onClick={addNewPGFunction}>Add Your PG</Text>
+                                    <Divider marginTop={2} marginBottom={2}/>
+                                    <Text textAlign='center' onClick={() => navigation('/pgAdded')}>Added PG's</Text>
+                                    <Divider marginTop={2} marginBottom={2}/>
+                                    <Text textAlign='center' onClick={() => navigation('/profile')}>Profile</Text>
+                                </DrawerBody>
+
+                                <DrawerFooter>
+                                    <Button colorScheme='red' width='100%' onClick={logoutFunction}>LogOut</Button>
+                                </DrawerFooter>
+
+                            </DrawerContent>
+                        </Drawer>
+                    </div>
+                )
             }
 
 

@@ -6,6 +6,8 @@ import SpecificPGScreen from "../screens/specificPGScreen";
 import NewCommentScreen from "../screens/addCommentScreen";
 import LoginRegistrationScreen from "../screens/loginRegistrationScreen";
 import FAQScreen from "../screens/faqScreen";
+import ProfileScreen from "../screens/profileScreen";
+import UserAddedPG from "../screens/userAddedPGScreen";
 
 const Router = () => {
     const router = createBrowserRouter([
@@ -36,6 +38,14 @@ const Router = () => {
         {
             path: '/FAQ',
             element: <FAQScreen />
+        },
+        {
+            path: '/profile',
+            element: <ProfileScreen />
+        },
+        {
+            path: '/pgAdded',
+            element: <UserAddedPG />
         }
     ]);
 
