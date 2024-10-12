@@ -36,15 +36,20 @@ const userLogin = asyncHandler(async(req, res) => {
     try{
         const oldUser = await userModel.findOne({ email: email })
         if(!oldUser) {
-            res.json({ status: "noUser" })
+            res.status(401).send("Wrong Email or Password")
         }
 
         const validPassword = await bcrypt.compare(password, oldUser.password);
         if (!validPassword){
-            res.json({ status: "noUser" })
+            res.status(401).send("Wrong Password")
         }
 
-        res.json({ userId: oldUser._id })
+        res.status(200).json(
+            { 
+                userId: oldUser._id,
+                username: oldUser.username
+            }
+        )
     }
     catch(err) {
         console.log(err)
