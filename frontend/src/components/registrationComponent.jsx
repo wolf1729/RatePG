@@ -1,58 +1,37 @@
 import { useNavigate } from "react-router-dom"
-import { userRegistration } from "../../utils/userAPICalls"
 import { Stack, Image, Input, Button } from "@chakra-ui/react"
 import { useState } from "react"
 import registration from '../assets/registration.jpg'
+import { registerUser } from "../../Store/User/userSlice"
+import { useDispatch } from "react-redux"
 
 function RegistrationComponent() {
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const registrationFunction = async() => {
-        try{
-            if(username === '' || email === '' || password === ''){
-                toast({
-                    title: 'Error',
-                    description: "Please fill all fields",
-                    status: 'warning',
-                    duration: 3000,
-                    isClosable: true,
-                })
-                return 
-            }
+        const resultAction = await dispatch(registerUser({ username, email, password }));
 
-            const result = await userRegistration(username, email, password)
-
-            if(result.status === 'exist'){
-                toast({
-                    title: 'Warning',
-                    description: "User already exist",
-                    status: 'warning',
-                    duration: 3000,
-                    isClosable: true,
-                })
-                return 
-            }
-            
+        if (registerUser.fulfilled.match(resultAction)) {
             toast({
-                description: "Registration Successful",
+                description: `Welcome, ${resultAction.payload.data.username}!`,
                 status: 'success',
                 duration: 3000,
                 isClosable: true,
-            })
-            Cookies.set('userId', result.userId)
-            navigate('/search')
-        }
-        catch(err) {
-            console.log(err)
+            });
+
+            navigate("/search");
+        } else if (registerUser.rejected.match(resultAction)) {
+            // Display the error message returned by the server
             toast({
-                description: "Something went wrong",
+                description: resultAction.payload || "Registration failed",
                 status: 'error',
                 duration: 3000,
                 isClosable: true,
-            })
+            });
         }
     }
 
