@@ -23,13 +23,34 @@ const userRegistration = asyncHandler(async(req, res) => {
             password: hashedPassword
         }
 
-        const newUser = new userModel(userDetails)
-        await newUser.save();
-        res.json({ userId: newUser._id })
+        const newUser = await userModel.create(userDetails)
+        
+        if (!newUser) {
+            return res.status(502).send('Something went wrong')
+        }
+
+        const token = await jwt.sign(
+            {
+                username: newUser.username,
+                id: newUser._id
+            },
+            jwtSecret,
+            { expiresIn: '48h' }
+        )
+
+        res.status(200).json({
+            success: true,
+            data: {
+                token: token,
+                username: newUser.username,
+                userId: newUser._id
+            }
+        })
+
     }
     catch(err) {
         console.log(err)
-        res.json({ status: false })
+        res.status(500).send('Internal Server Error')
     }
 })
 
