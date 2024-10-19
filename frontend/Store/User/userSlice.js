@@ -5,10 +5,12 @@ const baseURL = "http://localhost:3000/userRoutes";
 const initialState = {
     username: null,
     userId: null,
+    token: null,  // Add token to the initial state
     status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
     error: null
 };
 
+// Async thunk for logging in the user
 export const loginUser = createAsyncThunk(
     "user/login",
     async ({ email, password }, { rejectWithValue }) => {
@@ -21,7 +23,6 @@ export const loginUser = createAsyncThunk(
                 },
             });
 
-            // Check if the response is not ok
             if (!response.ok) {
                 const errorMessage = await response.text(); // Get error message
                 return rejectWithValue(errorMessage);
@@ -35,8 +36,9 @@ export const loginUser = createAsyncThunk(
     }
 );
 
+// Async thunk for registering the user
 export const registerUser = createAsyncThunk(
-    "user/login",
+    "user/register",
     async ({ username, email, password }, { rejectWithValue }) => {
         try {
             const response = await fetch(`${baseURL}/userRegistration`, {
@@ -47,9 +49,8 @@ export const registerUser = createAsyncThunk(
                 },
             });
 
-            // Check if the response is not ok
             if (!response.ok) {
-                const errorMessage = await response.text(); // Get error message
+                const errorMessage = await response.text();
                 return rejectWithValue(errorMessage);
             }
 
@@ -64,10 +65,18 @@ export const registerUser = createAsyncThunk(
 const userSlice = createSlice({
     name: "user",
     initialState,
-    reducers: {},
+    reducers: {
+        logout: (state) => {
+            state.username = null;
+            state.userId = null;
+            state.token = null;
+            state.status = 'idle';
+            state.error = null;
+        }
+    },
     extraReducers: (builder) => {
         builder
-            // Login User 
+            // Handle login
             .addCase(loginUser.pending, (state) => {
                 state.status = 'loading';
                 state.error = null;
@@ -76,29 +85,31 @@ const userSlice = createSlice({
                 state.status = 'succeeded';
                 state.userId = action.payload.data.userId;
                 state.username = action.payload.data.username;
-                state.token = action.payload.data.token
+                state.token = action.payload.data.token;  // Save token on success
             })
             .addCase(loginUser.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.payload;
             })
 
-            // Register User
+            // Handle registration
             .addCase(registerUser.pending, (state) => {
                 state.status = 'loading';
-                state.error = null
+                state.error = null;
             })
             .addCase(registerUser.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 state.userId = action.payload.data.userId;
                 state.username = action.payload.data.username;
-                state.token = action.payload.data.token
+                state.token = action.payload.data.token;  // Save token on success
             })
             .addCase(registerUser.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.payload;
-            })
+            });
     },
 });
+
+export const { logout } = userSlice.actions;
 
 export default userSlice.reducer;

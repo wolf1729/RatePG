@@ -6,7 +6,6 @@ import { Input, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Box, Text, 
 import { useNavigate, useParams } from 'react-router-dom';
 import { addNewComment } from '../../utils/commentAPICalls';
 import { updateValuesComment } from '../../utils/pgAPICalls';
-import { usernameAPICall } from '../../utils/userAPICalls';
 import Cookies from 'js-cookie';
 
 function NewCommentScreen() {
@@ -21,20 +20,20 @@ function NewCommentScreen() {
     const [overallRating, setOverallRating] = useState([])
     const [userId, setUserId] = useState('')
 
-    useEffect(() => {
-        const gettingUsername = async() => {
-            try{
-                await setUserId(Cookies.get('userId'))
-                const result = await usernameAPICall(userId)
-                setName(result)
-            }
-            catch(err) {
-                console.log(err)
-            }
-        }
+    // useEffect(() => {
+    //     const gettingUsername = async() => {
+    //         try{
+    //             await setUserId(Cookies.get('userId'))
+    //             const result = await usernameAPICall(userId)
+    //             setName(result)
+    //         }
+    //         catch(err) {
+    //             console.log(err)
+    //         }
+    //     }
 
-        gettingUsername()
-    })
+    //     gettingUsername()
+    // })
 
     const addNewPGFunction = async() => {
         if (name === '' && comment === ''){

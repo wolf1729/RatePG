@@ -1,18 +1,14 @@
 import '../styles/homePageHeaderStyle.css';
-import { Avatar, Button, Stack, Text, Drawer, DrawerBody, DrawerOverlay, DrawerCloseButton, DrawerHeader, DrawerFooter, DrawerContent, useDisclosure, Divider } from '@chakra-ui/react';
+import { Stack, Button, Text } from '@chakra-ui/react';
 import { MdAir } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
-import { GoPerson } from "react-icons/go";
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import SideNavigation from './sideNavigation';
 
 function HeaderComponent({ searchScreen = false, newEntryPage = false, isVerified = false }) {
     const navigation = useNavigate();
     const [user, setUser] = useState("")
-
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const btnRef = useRef();
 
     // Access Redux state
     const userInfo = useSelector((state) => state.user);
@@ -26,11 +22,6 @@ function HeaderComponent({ searchScreen = false, newEntryPage = false, isVerifie
         }
     }, [status, username ]);
 
-    const logoutFunction = () => {
-        Cookies.remove('userId');
-        navigation('/');
-    };
-
     const addNewPGFunction = () => {
         if (isVerified === true) {
             navigation('/newPGEntry');
@@ -43,41 +34,15 @@ function HeaderComponent({ searchScreen = false, newEntryPage = false, isVerifie
         if (searchScreen === true) {
             if (isVerified === true) {
                 return (
-                    <div>
-                        <Stack display='flex' flexDir='row' flexWrap='wrap' alignItems='center' justifyContent='space-evenly' ref={btnRef} onClick={onOpen}>
-                            <Avatar size='sm' src={<GoPerson />} />
-                            <Text fontSize={[15, 25]}>{user}</Text>
-                        </Stack>
-                        <Drawer
-                            isOpen={isOpen}
-                            placement='right'
-                            onClose={onClose}
-                            finalFocusRef={btnRef}
-                        >
-                            <DrawerOverlay />
-                            <DrawerContent>
-
-                                <DrawerBody marginTop={5}>
-                                    <Text textAlign='center' onClick={addNewPGFunction}>Add Your PG</Text>
-                                    <Divider marginTop={2} marginBottom={2}/>
-                                    <Text textAlign='center' onClick={() => navigation('/pgAdded')}>Added PG's</Text>
-                                    <Divider marginTop={2} marginBottom={2}/>
-                                    <Text textAlign='center' onClick={() => navigation('/profile')}>Profile</Text>
-                                </DrawerBody>
-
-                                <DrawerFooter>
-                                    <Button colorScheme='red' width='100%' onClick={logoutFunction}>LogOut</Button>
-                                </DrawerFooter>
-
-                            </DrawerContent>
-                        </Drawer>
-                    </div>
+                    <SideNavigation user={username} />
                 );
             }
 
-            return <Stack display='flex' flexDir='row' flexWrap='wrap' alignItems='center' justifyContent='space-evenly'>
-                <Button colorScheme='green' paddingLeft={[0, 8]} paddingRight={[0, 8]} onClick={() => addNewPGFunction()} size={['xs', 'md']}>Add Your PG</Button>
-            </Stack>;
+            return (
+                <Stack display='flex' flexDir='row' flexWrap='wrap' alignItems='center' justifyContent='space-evenly'>
+                    <Button colorScheme='green' paddingLeft={[0, 8]} paddingRight={[0, 8]} onClick={addNewPGFunction} size={['xs', 'md']}>Add Your PG</Button>
+                </Stack>
+            )
 
         } else if (newEntryPage === true) {
             return <Button colorScheme='green' paddingLeft={8} paddingRight={8} onClick={() => navigation('/search')} size={['xs', 'md']}>Search Your PG</Button>;
@@ -98,7 +63,7 @@ function HeaderComponent({ searchScreen = false, newEntryPage = false, isVerifie
             </Stack>
         </div>
         </>
-    );
+    ); 
 }
 
 export default HeaderComponent;
