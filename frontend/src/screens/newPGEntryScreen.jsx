@@ -158,8 +158,43 @@ function NewPGEntryScreen() {
                     <SliderThumb />
                 </Slider>
             </Box>
-            {/* ... Other form fields ... */}
-            <Stack display='flex' flexDir='row' marginTop={2} marginBottom={5}>
+            <Box width={['80%', '60%']} marginBottom={5} marginTop={5}>
+                <Text>Location Convience</Text>
+                <Slider min={0} max={5} step={1} defaultValue={0} onChange={(val) => setbathroomCondition(val)}>
+                    <SliderTrack>
+                        <SliderFilledTrack />
+                    </SliderTrack>
+                    <SliderThumb />
+                </Slider>
+            </Box>
+            <Box width={['80%', '60%']} marginBottom={5} marginTop={5}>
+                <Text>Overall Condition</Text>
+                <Slider min={0} max={5} step={1} defaultValue={0} onChange={(val) => setbathroomCondition(val)}>
+                    <SliderTrack>
+                        <SliderFilledTrack />
+                    </SliderTrack>
+                    <SliderThumb />
+                </Slider>
+            </Box>
+            <Input width={['80%', '60%']} value={price} onChange={(e) => setPrice(e.target.value)} placeholder="Enter Rent" marginBottom={5} marginTop={5}/>
+            <div className='facilities'>
+                <Text marginBottom={3} marginTop={5} fontSize={20} fontWeight={600}>Facilities</Text>
+                <CheckboxGroup colorScheme='green' defaultValue={[]} value={facilities} onChange={(e) => setFacilities(e)}>
+                    <Stack spacing={[1, 5]} direction={['column', 'row']} display='flex' flexDir='row' flexWrap='wrap' alignContent='center' justifyContent='center'>
+                        <Box borderColor='#C8C8C8' borderWidth={1} borderRadius={10} padding={1} display='flex' flexDir='row' alignItems='self-start' justifyContent=''><Checkbox value='meals'><Text marginRight={2}>Meals</Text></Checkbox><GiHotMeal size={20}/></Box>
+                        <Box borderColor='#C8C8C8' borderWidth={1} borderRadius={10} padding={1} display='flex' flexDir='row' alignItems='self-start'><Checkbox value='houseKeeping'><Text marginRight={2}>House Keeping</Text></Checkbox><PiHouseLight size={20}/></Box>
+                        <Box borderColor='#C8C8C8' borderWidth={1} borderRadius={10} padding={1} display='flex' flexDir='row' alignItems='self-start'><Checkbox value='laundry'><Text marginRight={2}>Laundry Service</Text></Checkbox><GiClothes size={20}/></Box>
+                        <Box borderColor='#C8C8C8' borderWidth={1} borderRadius={10} padding={1} display='flex' flexDir='row' alignItems='self-start'><Checkbox value='wifi'><Text marginRight={2}>Wi-fi</Text></Checkbox><FaWifi size={20}/></Box>
+                        <Box borderColor='#C8C8C8' borderWidth={1} borderRadius={10} padding={1} display='flex' flexDir='row' alignItems='self-start'><Checkbox value='Security'><Text marginRight={2}>Security</Text></Checkbox><PiSecurityCameraFill size={20}/></Box>
+                        <Box borderColor='#C8C8C8' borderWidth={1} borderRadius={10} padding={1} display='flex' flexDir='row' alignItems='self-start'><Checkbox value='commonArea'><Text marginRight={2}>Common Area</Text></Checkbox><PiMapPinSimpleAreaBold size={20}/></Box>
+                        <Box borderColor='#C8C8C8' borderWidth={1} borderRadius={10} padding={1} display='flex' flexDir='row' alignItems='self-start'><Checkbox value='transportation'><Text marginRight={2}>Transportation</Text></Checkbox><MdEmojiTransportation size={20}/></Box>
+                        <Box borderColor='#C8C8C8' borderWidth={1} borderRadius={10} padding={1} display='flex' flexDir='row' alignItems='self-start'><Checkbox value='gym'><Text marginRight={2}>Gym</Text></Checkbox><CgGym size={20}/></Box>
+                        <Box borderColor='#C8C8C8' borderWidth={1} borderRadius={10} padding={1} display='flex' flexDir='row' alignItems='self-start'><Checkbox value='tv'><Text marginRight={2}>TV</Text></Checkbox><PiTelevisionSimpleFill size={20}/></Box>
+                        <Box borderColor='#C8C8C8' borderWidth={1} borderRadius={10} padding={1} display='flex' flexDir='row' alignItems='self-start'><Checkbox value='airConditioning'><Text marginRight={2}>Air Conditioning</Text></Checkbox><TbAirConditioning size={20}/></Box>
+                    </Stack>
+                </CheckboxGroup>
+            </div>
+            <Stack display='flex' flexDir={['column', 'row']} marginTop={2} marginBottom={5}>
                 <Text fontWeight={600} fontSize={20}>Upload Image : </Text>
                 <input type='file' accept="image/*" onChange={handleImageFileChange} />
             </Stack>
