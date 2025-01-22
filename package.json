@@ -15,6 +15,7 @@
     "@emotion/styled": "^11.11.5",
     "@mui/material": "^5.16.1",
     "@reduxjs/toolkit": "^2.2.8",
+    "@vercel/analytics": "^1.4.1",
     "dotenv": "^16.4.5",
     "downshift": "^9.0.6",
     "firebase": "^10.12.0",
