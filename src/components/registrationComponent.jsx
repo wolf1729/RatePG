@@ -4,6 +4,7 @@ import { useState } from "react"
 import registration from '../assets/registration.jpg'
 import { registerUser } from "../../Store/User/userSlice"
 import { useDispatch } from "react-redux"
+import { registerEmail } from "../../utils/firebaseFunctions"
 
 function RegistrationComponent() {
     const [username, setUsername] = useState('')
@@ -13,26 +14,28 @@ function RegistrationComponent() {
     const dispatch = useDispatch()
 
     const registrationFunction = async() => {
-        const resultAction = await dispatch(registerUser({ username, email, password }));
+        const response = await registerEmail(email, password)
+        console.log(response);
+        // const resultAction = await dispatch(registerUser({ username, email, password }));
 
-        if (registerUser.fulfilled.match(resultAction)) {
-            toast({
-                description: `Welcome, ${resultAction.payload.data.username}!`,
-                status: 'success',
-                duration: 3000,
-                isClosable: true,
-            });
+        // if (registerUser.fulfilled.match(resultAction)) {
+        //     toast({
+        //         description: `Welcome, ${resultAction.payload.data.username}!`,
+        //         status: 'success',
+        //         duration: 3000,
+        //         isClosable: true,
+        //     });
 
-            navigate("/search");
-        } else if (registerUser.rejected.match(resultAction)) {
-            // Display the error message returned by the server
-            toast({
-                description: resultAction.payload || "Registration failed",
-                status: 'error',
-                duration: 3000,
-                isClosable: true,
-            });
-        }
+        //     navigate("/search");
+        // } else if (registerUser.rejected.match(resultAction)) {
+        //     // Display the error message returned by the server
+        //     toast({
+        //         description: resultAction.payload || "Registration failed",
+        //         status: 'error',
+        //         duration: 3000,
+        //         isClosable: true,
+        //     });
+        // }
     }
 
     return (

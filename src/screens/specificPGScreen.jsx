@@ -6,7 +6,6 @@ import HeaderComponent from "../components/header"
 import { Image, Text, Stack, Kbd, Button, Divider } from "@chakra-ui/react"
 import { useNavigate } from 'react-router-dom'
 import { showComment } from '../../utils/commentAPICalls'
-import Cookies from 'js-cookie';
 
 function SpecificPGScreen() {
     const { pgID } = useParams()

@@ -3,16 +3,18 @@ import { Avatar, Button, Stack, Text, Drawer, DrawerBody, DrawerOverlay, DrawerF
 import { GoPerson } from "react-icons/go";
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from "react-redux"
 
 function SideNavigation({ user }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const btnRef = useRef();
     const navigation = useNavigate()
+    const dispatch = useDispatch()
 
     const logoutFunction = () => {
-        Cookies.remove('userId');
-        navigation('/');
-    };
+        dispatch(logout())
+        navigation("/search")
+    }
 
     const addNewPGFunction = () => {
         if (isVerified === true) {
@@ -39,8 +41,6 @@ function SideNavigation({ user }) {
 
                     <DrawerBody marginTop={5}>
                         <Text textAlign='center' onClick={addNewPGFunction}>Add Your PG</Text>
-                        <Divider marginTop={2} marginBottom={2}/>
-                        <Text textAlign='center' onClick={() => navigation('/pgAdded')}>Added PG's</Text>
                         <Divider marginTop={2} marginBottom={2}/>
                         <Text textAlign='center' onClick={() => navigation('/profile')}>Profile</Text>
                     </DrawerBody>

@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client';
 import { ChakraProvider } from '@chakra-ui/react';
 import Router from './Routes/router';
 import { Provider } from "react-redux";
-import { store, persistor } from "../Store/store"; // Import persistor
-import { PersistGate } from 'redux-persist/integration/react'; // Import PersistGate
+import { store, persistor } from "../Store/store"; 
+import { PersistGate } from 'redux-persist/integration/react';
 import '../src/index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
