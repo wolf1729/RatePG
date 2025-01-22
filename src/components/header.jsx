@@ -1,29 +1,17 @@
+/* eslint-disable react/prop-types */
 import '../styles/homePageHeaderStyle.css';
 import { Stack, Button, Text } from '@chakra-ui/react';
 import { MdAir } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import SideNavigation from './sideNavigation';
 
-function HeaderComponent({ searchScreen = false, newEntryPage = false, isVerified = false }) {
+function HeaderComponent({ searchScreen = false, newEntryPage = false }) {
+    const user = useSelector((state) => state.user)
     const navigation = useNavigate();
-    const [user, setUser] = useState("")
-
-    // Access Redux state
-    const userInfo = useSelector((state) => state.user);
-    const { username, status } = userInfo;
-
-    // Remove async API call since we will now use data from the store
-    useEffect(() => {
-        if (status === 'succeeded') {
-            // User is authenticated, no need for API call here
-            setUser(username);
-        }
-    }, [status, username ]);
 
     const addNewPGFunction = () => {
-        if (isVerified === true) {
+        if (user.username !== null) {
             navigation('/newPGEntry');
         } else {
             navigation('/loginRegistration');
@@ -32,9 +20,9 @@ function HeaderComponent({ searchScreen = false, newEntryPage = false, isVerifie
 
     const buttonFunction = () => {
         if (searchScreen === true) {
-            if (isVerified === true) {
+            if (user.username !== null) {
                 return (
-                    <SideNavigation user={username} />
+                    <SideNavigation user={user} />
                 );
             }
 

@@ -1,4 +1,4 @@
-const baseURL = import.meta.env.VITE_SERVER
+const baseURL = `${import.meta.env.VITE_SERVER}/pgRoutes`
 // const baseURL = "https://ratepg-backend.onrender.com/pgRoutes"
 
 //API call to add new PG details

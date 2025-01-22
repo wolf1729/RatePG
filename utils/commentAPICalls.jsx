@@ -1,4 +1,4 @@
-const baseURL = import.meta.env.VITE_SERVER
+const baseURL = `${import.meta.env.VITE_SERVER}/commentRoutes`
 
 //API call to add new comment
 const addNewComment = async(pgId, username, comment, bathroomRating, roomRating, locationRating, overallRating) => {
