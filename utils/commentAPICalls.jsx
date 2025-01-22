@@ -1,5 +1,4 @@
-const baseURL = "http://localhost:3000/commentRoutes"
-// const baseURL = "https://ratepg-backend.onrender.com/commentRoutes"
+const baseURL = import.meta.env.VITE_SERVER
 
 //API call to add new comment
 const addNewComment = async(pgId, username, comment, bathroomRating, roomRating, locationRating, overallRating) => {

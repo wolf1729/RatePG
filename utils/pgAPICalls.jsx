@@ -1,4 +1,4 @@
-const baseURL = "http://localhost:3000/pgRoutes"
+const baseURL = import.meta.env.VITE_SERVER
 // const baseURL = "https://ratepg-backend.onrender.com/pgRoutes"
 
 //API call to add new PG details

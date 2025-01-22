@@ -11,7 +11,7 @@ function LoginComponent() {
     const navigate = useNavigate();
     const toast = useToast();
     const dispatch = useDispatch();
-    const user = useSelector((state) => state.user);
+    const user = useSelector((state) => state.user); 
 
     const loginFunction = async () => {
         const resultAction = await dispatch(loginUser({ email, password }));

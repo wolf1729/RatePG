@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom"
-import { Stack, Image, Input, Button } from "@chakra-ui/react"
+import { Stack, Image, Input, Button, useToast } from "@chakra-ui/react"
 import { useState } from "react"
 import registration from '../assets/registration.jpg'
 import { registerUser } from "../../Store/User/userSlice"
 import { useDispatch } from "react-redux"
-import { registerEmail } from "../../utils/firebaseFunctions"
 
 function RegistrationComponent() {
+    const toast = useToast()
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -14,28 +14,26 @@ function RegistrationComponent() {
     const dispatch = useDispatch()
 
     const registrationFunction = async() => {
-        const response = await registerEmail(email, password)
-        console.log(response);
-        // const resultAction = await dispatch(registerUser({ username, email, password }));
+        const resultAction = await dispatch(registerUser({ username, email, password }));
+        console.log(resultAction)
+        if (registerUser.fulfilled.match(resultAction)) {
+            toast({
+                description: `Welcome, ${resultAction.payload.data.username}!`,
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+            });
 
-        // if (registerUser.fulfilled.match(resultAction)) {
-        //     toast({
-        //         description: `Welcome, ${resultAction.payload.data.username}!`,
-        //         status: 'success',
-        //         duration: 3000,
-        //         isClosable: true,
-        //     });
-
-        //     navigate("/search");
-        // } else if (registerUser.rejected.match(resultAction)) {
-        //     // Display the error message returned by the server
-        //     toast({
-        //         description: resultAction.payload || "Registration failed",
-        //         status: 'error',
-        //         duration: 3000,
-        //         isClosable: true,
-        //     });
-        // }
+            navigate("/search");
+        } else if (registerUser.rejected.match(resultAction)) {
+            // Display the error message returned by the server
+            toast({
+                description: resultAction.payload || "Registration failed",
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
+            });
+        }
     }
 
     return (

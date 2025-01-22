@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, getDownloadURL, uploadBytes } from 'firebase/storage'
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -27,6 +27,16 @@ async function registerEmail(email, password) {
   }
 }
 
+async function loginEmail(email, password) {
+  try {
+    const response = await signInWithEmailAndPassword(auth, email, password)
+    return response
+  }
+  catch(err) {
+    console.log(err)
+  }
+}
+
 async function uploadFileInStorage(file, filename) {
   try {
     const storageRef = ref(storage, `pgImages/${filename}`);
@@ -41,4 +51,4 @@ async function uploadFileInStorage(file, filename) {
   }
 }
 
-export { uploadFileInStorage, registerEmail }
+export { uploadFileInStorage, registerEmail, loginEmail }

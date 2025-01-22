@@ -1,12 +1,16 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { loginEmail, registerEmail } from "../../utils/firebaseFunctions";
 
-const baseURL = "http://localhost:3000/userRoutes";
+const baseURL = import.meta.env.VITE_SERVER;
 
 const initialState = {
     username: null,
     userId: null,
-    token: null,  // Add token to the initial state
-    status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
+    token: null,
+    img: null,
+    uid: null,
+    email: null,
+    status: 'idle',
     error: null
 };
 
@@ -15,20 +19,25 @@ export const loginUser = createAsyncThunk(
     "user/login",
     async ({ email, password }, { rejectWithValue }) => {
         try {
-            const response = await fetch(`${baseURL}/userLogin`, {
+            const firebaseResponse = await loginEmail(email, password)
+            const response = await fetch(`${baseURL}/userRoutes/userLogin`, {
                 method: 'POST',
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({ 
+                    uid: firebaseResponse?.user?.uid, 
+                    email: firebaseResponse?.user?.email
+                }),
                 headers: {
                     "Content-Type": "application/json",
                 },
             });
 
             if (!response.ok) {
-                const errorMessage = await response.text(); // Get error message
+                const errorMessage = await response.text(); 
                 return rejectWithValue(errorMessage);
             }
 
             const data = await response.json();
+            console.log(data)
             return data;
         } catch (err) {
             return rejectWithValue('Something went wrong');
@@ -41,9 +50,16 @@ export const registerUser = createAsyncThunk(
     "user/register",
     async ({ username, email, password }, { rejectWithValue }) => {
         try {
-            const response = await fetch(`${baseURL}/userRegistration`, {
+            const firebaseResponse = await registerEmail(email, password)
+            const response = await fetch(`${baseURL}/userRoutes/userRegistration`, {
                 method: 'POST',
-                body: JSON.stringify({ username, email, password }),
+                body: JSON.stringify({ 
+                    uid: firebaseResponse?.user?.uid, 
+                    email: firebaseResponse?.user?.email, 
+                    img: "",
+                    username: username,
+                    method: firebaseResponse?.operationType
+                }),
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -55,6 +71,7 @@ export const registerUser = createAsyncThunk(
             }
 
             const data = await response.json();
+            console.log(data)
             return data; 
         } catch (err) {
             return rejectWithValue('Something went wrong');
@@ -85,7 +102,10 @@ const userSlice = createSlice({
                 state.status = 'succeeded';
                 state.userId = action.payload.data.userId;
                 state.username = action.payload.data.username;
-                state.token = action.payload.data.token;  // Save token on success
+                state.token = action.payload.data.token;
+                state.img = action.payload.data.img;
+                state.uid = action.payload.data.uid;
+                state.email = action.payload.data.email;
             })
             .addCase(loginUser.rejected, (state, action) => {
                 state.status = 'failed';
@@ -101,7 +121,10 @@ const userSlice = createSlice({
                 state.status = 'succeeded';
                 state.userId = action.payload.data.userId;
                 state.username = action.payload.data.username;
-                state.token = action.payload.data.token;  // Save token on success
+                state.token = action.payload.data.token;
+                state.img = action.payload.data.img;
+                state.uid = action.payload.data.uid;
+                state.email = action.payload.data.email;
             })
             .addCase(registerUser.rejected, (state, action) => {
                 state.status = 'failed';
