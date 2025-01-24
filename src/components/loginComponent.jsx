@@ -2,8 +2,9 @@ import { useToast, Image, Input, Stack, Button } from "@chakra-ui/react";
 import login from '../assets/login.jpg';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../Store/User/userSlice";
+import { loginUser, loginWithGoogle } from "../../Store/User/userSlice";
 import { useState } from "react";
+import GoogleButton from "react-google-button";
 
 function LoginComponent() {
     const [email, setEmail] = useState('');
@@ -36,6 +37,29 @@ function LoginComponent() {
         }
     };
 
+    const loginGoogle = async() => {
+        const resultAction = await dispatch(loginWithGoogle());
+
+        if (loginWithGoogle.fulfilled.match(resultAction)) {
+            toast({
+                description: `Welcome, ${resultAction.payload.data.username}!`,
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+            });
+
+            navigate("/search");
+        } else if (loginWithGoogle.rejected.match(resultAction)) {
+            // Display the error message returned by the server
+            toast({
+                description: resultAction.payload || "Login failed",
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
+            });
+        }
+    }
+
     // Disable the login button while loading
     const isLoading = user.status === 'loading';
 
@@ -65,6 +89,7 @@ function LoginComponent() {
                 >
                     Login
                 </Button>
+                <GoogleButton onClick={() => loginGoogle()} style={{ marginTop: 25 }} />
             </Stack>
         </div>
     );

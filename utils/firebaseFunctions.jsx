@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, getDownloadURL, uploadBytes } from 'firebase/storage'
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -16,6 +16,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app)
 const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider()
 
 async function registerEmail(email, password) {
   try {
@@ -37,6 +38,21 @@ async function loginEmail(email, password) {
   }
 }
 
+async function registerGoogle() {
+  try {
+      const response = await signInWithPopup(auth, googleProvider);
+      console.log(response)
+      return response;
+  } catch (err) {
+      if (err.code === "auth/popup-closed-by-user") {
+          console.info("User closed the Google sign-in popup.");
+          return null; // Return null to indicate no action
+      }
+      console.error(`Google sign-in error: ${err.code} - ${err.message}`);
+      throw err;
+  }
+}
+
 async function uploadFileInStorage(file, filename) {
   try {
     const storageRef = ref(storage, `pgImages/${filename}`);
@@ -51,4 +67,4 @@ async function uploadFileInStorage(file, filename) {
   }
 }
 
-export { uploadFileInStorage, registerEmail, loginEmail }
+export { uploadFileInStorage, registerEmail, loginEmail, registerGoogle }
