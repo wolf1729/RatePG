@@ -1,4 +1,3 @@
-import { useToast, Image, Input, Stack, Button } from "@chakra-ui/react";
 import login from '../assets/login.jpg';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,87 +9,65 @@ function LoginComponent() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    const toast = useToast();
     const dispatch = useDispatch();
-    const user = useSelector((state) => state.user); 
+    const user = useSelector((state) => state.user);
 
     const loginFunction = async () => {
         const resultAction = await dispatch(loginUser({ email, password }));
 
         if (loginUser.fulfilled.match(resultAction)) {
-            toast({
-                description: `Welcome, ${resultAction.payload.data.username}!`,
-                status: 'success',
-                duration: 3000,
-                isClosable: true,
-            });
-
+            alert(`Welcome, ${resultAction.payload.data.username}!`);
             navigate("/search");
         } else if (loginUser.rejected.match(resultAction)) {
-            // Display the error message returned by the server
-            toast({
-                description: resultAction.payload || "Login failed",
-                status: 'error',
-                duration: 3000,
-                isClosable: true,
-            });
+            alert(resultAction.payload || "Login failed");
         }
     };
 
-    const loginGoogle = async() => {
+    const loginGoogle = async () => {
         const resultAction = await dispatch(loginWithGoogle());
 
         if (loginWithGoogle.fulfilled.match(resultAction)) {
-            toast({
-                description: `Welcome, ${resultAction.payload.data.username}!`,
-                status: 'success',
-                duration: 3000,
-                isClosable: true,
-            });
-
+            alert(`Welcome, ${resultAction.payload.data.username}!`);
             navigate("/search");
         } else if (loginWithGoogle.rejected.match(resultAction)) {
-            // Display the error message returned by the server
-            toast({
-                description: resultAction.payload || "Login failed",
-                status: 'error',
-                duration: 3000,
-                isClosable: true,
-            });
+            alert(resultAction.payload || "Login failed");
         }
-    }
+    };
 
     // Disable the login button while loading
     const isLoading = user.status === 'loading';
 
     return (
-        <div className='loginRegistrationComponent'>
-            <Stack display='flex' flexDir='column' justifyContent='center' alignItems='center' height='100%' width='100%'>
-                <Image src={login} width={['80%', '20%']} />
-                <Input 
-                    type='email' 
-                    value={email} 
-                    onChange={(e) => setEmail(e.target.value)} 
-                    placeholder='Email' 
-                    width={['80%', '30%']} 
-                />
-                <Input 
-                    type='password' 
-                    value={password} 
-                    onChange={(e) => setPassword(e.target.value)} 
-                    placeholder='Password' 
-                    width={['80%', '30%']} 
-                />
-                <Button 
-                    colorScheme='teal' 
-                    onClick={loginFunction} 
-                    isLoading={isLoading} // Show loading spinner on button
-                    isDisabled={isLoading} // Disable button while loading
-                >
-                    Login
-                </Button>
-                <GoogleButton onClick={() => loginGoogle()} style={{ marginTop: 25 }} />
-            </Stack>
+        <div className="flex flex-col items-center justify-center h-screen w-full">
+            <img src={login} alt="Login" className="w-4/5 md:w-1/5 mb-6" />
+            <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
+                className="w-4/5 md:w-1/3 p-2 border rounded mb-4"
+            />
+            <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                className="w-4/5 md:w-1/3 p-2 border rounded mb-4"
+            />
+            <button
+                onClick={loginFunction}
+                disabled={isLoading}
+                className={`w-4/5 md:w-1/3 p-2 rounded mb-4 ${
+                    isLoading
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-teal-500 hover:bg-teal-600 text-white"
+                }`}
+            >
+                {isLoading ? "Loading..." : "Login"}
+            </button>
+            <div style={{ marginTop: 25 }}>
+                <GoogleButton onClick={loginGoogle} />
+            </div>
         </div>
     );
 }

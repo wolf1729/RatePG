@@ -1,9 +1,7 @@
-import { Text } from "@chakra-ui/react";
-
 function UserAddedPG() {
     return (
         <>
-        <Text>PG's Added by User</Text>
+        <p className="text-xl font-semibold">PG's Added by User</p>
         </>
     )
 }

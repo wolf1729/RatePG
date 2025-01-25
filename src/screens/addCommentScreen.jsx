@@ -2,7 +2,6 @@
 import '../styles/newPGEntryScreenStyle.css'
 import { useState, useEffect } from "react"
 import HeaderComponent from "../components/header"
-import { Input, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Box, Text, Button, useToast } from "@chakra-ui/react"
 import { useNavigate, useParams } from 'react-router-dom';
 import { addNewComment } from '../../utils/commentAPICalls';
 import { updateValuesComment } from '../../utils/pgAPICalls';
@@ -12,105 +11,107 @@ function NewCommentScreen() {
     const user = useSelector((state) => state.user)
     const { pgId } = useParams()
     const navigate = useNavigate()
-    const toast = useToast()
     const [name, setName] = useState('')
     const [comment, setComment] = useState('')
-    const [roomCondition, setRoomCondition] = useState([])
-    const [bathroomCondition, setbathroomCondition] = useState([])
-    const [locationConvenience, setLocationConvenience] = useState([])
-    const [overallRating, setOverallRating] = useState([])
+    const [roomCondition, setRoomCondition] = useState(0)
+    const [bathroomCondition, setBathroomCondition] = useState(0)
+    const [locationConvenience, setLocationConvenience] = useState(0)
+    const [overallRating, setOverallRating] = useState(0)
 
     useEffect(() => {
-        console.log(user)
         if (user.uid === null){
             navigate('/loginRegistration')
         }
     }, [navigate, user])
 
-    const addNewPGFunction = async() => {
+    const addNewPGFunction = async () => {
         if (name === '' && comment === ''){
-            toast({
-                title: 'Error',
-                description: "Please fill Name and Comment",
-                status: 'warning',
-                duration: 3000,
-                isClosable: true,
-            })
+            alert("Please fill Name and Comment");
+            return;
         }
         try {
             const updateValues = await updateValuesComment(pgId, bathroomCondition, roomCondition, locationConvenience, overallRating)
             const newComment = await addNewComment(pgId, name, comment, bathroomCondition, roomCondition, locationConvenience, overallRating)
 
             if (updateValues.status === false || newComment.status === false) {
-                toast({
-                    title: 'Error',
-                    description: "Something went wrong",
-                    status: 'error',
-                    duration: 3000,
-                    isClosable: true,
-                })    
+                alert("Something went wrong");
+            } else {
+                alert("PG Added to Database");
+                navigate(`/pgDetails/${pgId}`);
             }
-
-            toast({
-                title: 'Success',
-                description: "PG Added to Database",
-                status: 'success',
-                duration: 3000,
-                isClosable: true,
-            })
-
-            navigate(`/pgDetails/${pgId}`)
         }
-        catch(err) {
-            console.log(err)
+        catch (err) {
+            console.log(err);
         }
     }
 
     return (
         <>
         <HeaderComponent newEntryPage={true}/>
-        <div className="newPGEntryFormContainer">
-            <Input value={comment} onChange={(e) => setComment(e.target.value)} width='60%' placeholder="Enter your Comment" marginBottom={5} marginTop={5}/>
-            <Box width='60%' marginBottom={5} marginTop={5}>
-                <Text>Room Condition</Text>
-                <Slider min={0} max={5} step={1} defaultValue={0} onChange={(e) => setRoomCondition(e)}>
-                    <SliderTrack>
-                        <SliderFilledTrack />
-                    </SliderTrack>
-                    <SliderThumb />
-                </Slider>
-            </Box>
-            <Box width='60%' marginBottom={5} marginTop={5}>
-                <Text>Bathroom Condition</Text>
-                <Slider min={0} max={5} step={1} defaultValue={0} onChange={(e) => setbathroomCondition(e)}>
-                    <SliderTrack>
-                        <SliderFilledTrack />
-                    </SliderTrack>
-                    <SliderThumb />
-                </Slider>
-            </Box>
-            <Box width='60%' marginBottom={5} marginTop={5}>
-                <Text>Location Convenience</Text>
-                <Slider min={0} max={5} step={1} defaultValue={0} onChange={(e) => setLocationConvenience(e)}>
-                    <SliderTrack>
-                        <SliderFilledTrack />
-                    </SliderTrack>
-                    <SliderThumb />
-                </Slider>
-            </Box>
-            <Box width='60%' marginBottom={5} marginTop={5}>
-                <Text>Overall Rating</Text>
-                <Slider min={0} max={5} step={1} defaultValue={0} onChange={(e) => setOverallRating(e)}>
-                    <SliderTrack>
-                        <SliderFilledTrack />
-                    </SliderTrack>
-                    <SliderThumb />
-                </Slider>
-            </Box>
-            <Button colorScheme='orange' onClick={() => addNewPGFunction()}>Submit</Button>
+        <div className="flex flex-col items-center justify-center w-full p-4">
+            <input
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                placeholder="Enter your Comment"
+                className="w-3/5 p-2 border rounded mb-4"
+            />
+            <div className="w-3/5 mb-4">
+                <label>Room Condition</label>
+                <input
+                    type="range"
+                    min={0}
+                    max={5}
+                    step={1}
+                    value={roomCondition}
+                    onChange={(e) => setRoomCondition(e.target.value)}
+                    className="w-full mt-2"
+                />
+            </div>
+            <div className="w-3/5 mb-4">
+                <label>Bathroom Condition</label>
+                <input
+                    type="range"
+                    min={0}
+                    max={5}
+                    step={1}
+                    value={bathroomCondition}
+                    onChange={(e) => setBathroomCondition(e.target.value)}
+                    className="w-full mt-2"
+                />
+            </div>
+            <div className="w-3/5 mb-4">
+                <label>Location Convenience</label>
+                <input
+                    type="range"
+                    min={0}
+                    max={5}
+                    step={1}
+                    value={locationConvenience}
+                    onChange={(e) => setLocationConvenience(e.target.value)}
+                    className="w-full mt-2"
+                />
+            </div>
+            <div className="w-3/5 mb-4">
+                <label>Overall Rating</label>
+                <input
+                    type="range"
+                    min={0}
+                    max={5}
+                    step={1}
+                    value={overallRating}
+                    onChange={(e) => setOverallRating(e.target.value)}
+                    className="w-full mt-2"
+                />
+            </div>
+            <button
+                onClick={addNewPGFunction}
+                className="bg-orange-500 text-white py-2 px-4 rounded mt-4 hover:bg-orange-600"
+            >
+                Submit
+            </button>
         </div>
         </>
-    )
+    );
 } 
 
-export default NewCommentScreen
+export default NewCommentScreen;

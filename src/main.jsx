@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { ChakraProvider } from '@chakra-ui/react';
 import Router from './Routes/router';
 import { Provider } from "react-redux";
 import { store, persistor } from "../Store/store"; 
@@ -12,10 +11,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <ChakraProvider>
-          <Router />
-          <Analytics />
-        </ChakraProvider>
+        <Router />
+        <Analytics />
       </PersistGate>
     </Provider>
   </React.StrictMode>,

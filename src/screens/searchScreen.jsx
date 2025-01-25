@@ -1,17 +1,14 @@
-/* eslint-disable no-unused-vars */
 import '../styles/searchScreenStyle.css';
-import { Button, Select, Card, CardBody, Image, Stack, Heading, Text, CardFooter, ButtonGroup, useToast } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import HeaderComponent from '../components/header';
 import { allPG, findPGName } from '../../utils/pgAPICalls';
 import { useNavigate } from 'react-router-dom';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 import { useSelector } from 'react-redux';
+import PgCardComponent from '../components/pgCardComponent';
 
 function SearchScreen() {
     const navigate = useNavigate();
-    const toast = useToast();
-    
     const [searchOption, setSearchOption] = useState('name');
     const [searchText, setSearchText] = useState('');
     const [pgDetails, setPGDetails] = useState([]);
@@ -54,12 +51,7 @@ function SearchScreen() {
     const searchButtonFunction = async () => {
         try {
             if (searchText === '') {
-                toast({
-                    description: "Enter PG Name",
-                    status: 'error',
-                    duration: 3000,
-                    isClosable: true,
-                });
+                alert("Enter PG Name");
                 return;
             }
             const newData = await findPGName(searchText);
@@ -88,56 +80,46 @@ function SearchScreen() {
 
     const formatResult = (item) => {
         if (searchOption === 'name') {
-            return <span style={{ display: 'block', textAlign: 'left' }}>{item.name}</span>;
+            return <span className="block text-left">{item.name}</span>;
         } else if (searchOption === 'location') {
-            return <span style={{ display: 'block', textAlign: 'left' }}>{item.pgLocation}</span>;
+            return <span className="block text-left">{item.pgLocation}</span>;
         }
     };
 
     return (
         <>
             <HeaderComponent searchScreen={true} isVerified={verified} />
-            <div className="mainPageSearchContainer">
-                <Select value={searchOption} onChange={(e) => setSearchOption(e.target.value)} size={['xs', 'md']} width={[59, 36]}>
-                    <option value='name'>Name</option>
-                    <option value='location'>Location</option>
-                </Select>
-                <Stack size={['xs', 'md']} width={['60%', '75%']} height='fit-content' zIndex={10}>
-                    <ReactSearchAutocomplete
-                        items={pgDetails}
-                        onSearch={handleOnSearch}
-                        onHover={handleOnHover}
-                        onSelect={handleOnSelect}
-                        onFocus={handleOnFocus}
-                        autoFocus
-                        formatResult={formatResult}
-                    />
-                </Stack>
-                <Button colorScheme="blue" size={['xs', 'md']} onClick={searchButtonFunction}>Search</Button>
+            <div className="mainPageSearchContainer flex flex-col items-center mt-5">
+                <div className="mb-4 flex items-center">
+                    <select 
+                        value={searchOption} 
+                        onChange={(e) => setSearchOption(e.target.value)} 
+                        className="p-2 border border-gray-300 rounded-md mr-4">
+                        <option value='name'>Name</option>
+                        <option value='location'>Location</option>
+                    </select>
+                    <div className="w-[75%]">
+                        <ReactSearchAutocomplete
+                            items={pgDetails}
+                            onSearch={handleOnSearch}
+                            onHover={handleOnHover}
+                            onSelect={handleOnSelect}
+                            onFocus={handleOnFocus}
+                            autoFocus
+                            formatResult={formatResult}
+                        />
+                    </div>
+                </div>
+                <button 
+                    className="px-4 py-2 bg-blue-500 text-white rounded-md" 
+                    onClick={searchButtonFunction}>
+                    Search
+                </button>
             </div>
-            <div className='mainPageSearchResultContainer'>
+
+            <div className='mainPageSearchResultContainer grid grid-cols-1 md:grid-cols-3 gap-4 mt-10'>
                 {pgDetails.map((pg, index) => (
-                    <Card key={index} width={['150px', '350px']} height={['250px', '500px']} shadow='rgba(0, 0, 0, 0.35) 0px 5px 15px' marginTop={10} marginLeft={2} marginRight={2}>
-                        <CardBody>
-                            <Stack display='flex' alignItems='center' justifyContent='center'>
-                                <Image
-                                    src={pg.pgImage}
-                                    alt='PG image'
-                                    borderRadius='lg'
-                                />
-                            </Stack>
-                            <Stack mt={['1', '6']}>
-                                <Heading fontSize={['15px', '30px']}>{pg.name}</Heading>
-                                <Text fontSize={['10px', '20px']}>{pg.pgLocation}</Text>
-                                <Text color='blue.600' fontSize={['10px', '20px']}>Rating : {calculateOverallRating(pg.overallRating)}/5.0</Text>
-                            </Stack>
-                        </CardBody>
-                        <CardFooter position='absolute' bottom='0' left='0'>
-                            <ButtonGroup>
-                                <Button variant='solid' size={['xs', 'lg']} colorScheme='blue' onClick={() => navigate(`/pgDetails/${pg._id}`)}>Show Details</Button>
-                            </ButtonGroup>
-                        </CardFooter>
-                    </Card>
+                    <PgCardComponent key={index} index={index} pg={pg} calculateOverallRating={calculateOverallRating} navigate={navigate} />
                 ))}
             </div>
         </>

@@ -1,27 +1,30 @@
 import '../styles/loginRegisterScreenStyle.css'
-import { Stack, Switch, Text, Input, Button, useToast, Image } from '@chakra-ui/react'
 import { useState } from 'react'
 import LoginComponent from '../components/loginComponent'
 import RegistrationComponent from '../components/registrationComponent'
 
 function LoginRegistrationScreen() {
     const [isChecked, setIsChecked] = useState(false)
-    const toast = useToast()
 
     const handleToggle = () => {
-        setIsChecked(!isChecked);
+        setIsChecked(!isChecked)
     }
 
     return (
         <>
-        <Stack className="authHeader" display='flex' flexDir='row' alignItems='center' justifyContent='center' margin={5}>
-            <Text fontWeight={600}>Login</Text>
-            <Switch isChecked={isChecked} onChange={handleToggle} size='lg' colorScheme='orange'/>
-            <Text fontWeight={600}>Registration</Text>
-        </Stack>
-        <div className='loginRegistrationComponent'>
-            { isChecked ? <RegistrationComponent /> : <LoginComponent /> }
-        </div>
+            <div className="flex items-center justify-center space-x-4 my-5">
+                <span className="font-semibold">Login</span>
+                <input 
+                    type="checkbox" 
+                    checked={isChecked} 
+                    onChange={handleToggle} 
+                    className="w-6 h-6 rounded-full border-2 border-orange-500"
+                />
+                <span className="font-semibold">Registration</span>
+            </div>
+            <div className="loginRegistrationComponent">
+                {isChecked ? <RegistrationComponent /> : <LoginComponent />}
+            </div>
         </>
     )
 }

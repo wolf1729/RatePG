@@ -1,16 +1,15 @@
-import { Stack } from "@chakra-ui/react"
 import HeaderComponent from "../components/header"
 import HomePageOne from "../components/homePageOne"
 
 function HomeScreen() {
     return (
         <>
-        <Stack height='100vh' width='100vw'>
-            <HeaderComponent />
-            <Stack display='flex' alignItems='center' justifyContent='center' height='80%' marginTop={5}>
-                <HomePageOne />
-            </Stack>
-        </Stack>
+            <div className="h-screen w-screen">
+                <HeaderComponent />
+                <div className="flex items-center justify-center h-4/5 mt-5">
+                    <HomePageOne />
+                </div>
+            </div>
         </>
     )
 }

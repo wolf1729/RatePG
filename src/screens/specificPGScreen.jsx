@@ -3,7 +3,6 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { specificPGusingID } from "../../utils/pgAPICalls"
 import HeaderComponent from "../components/header"
-import { Image, Text, Stack, Kbd, Button, Divider } from "@chakra-ui/react"
 import { useNavigate } from 'react-router-dom'
 import { showComment } from '../../utils/commentAPICalls'
 import { useSelector } from 'react-redux'
@@ -56,19 +55,19 @@ function SpecificPGScreen() {
 
     const showingFacilities = () => {
         const facilitiesArray = pgDetails.facilities
-        if (!facilitiesArray || facilitiesArray.length === 0) return <Text>NO INFORMATION</Text>;
+        if (!facilitiesArray || facilitiesArray.length === 0) return <p>NO INFORMATION</p>;
         return facilitiesArray.map((e, index) => 
-            <Kbd key={index} width='fit-content'>{e}</Kbd>
+            <span key={index} className="border px-2 py-1 rounded-lg m-1">{e}</span>
         )
     }
 
     const showingComments = () => {
-        if (!comments || comments.length === 0) return <Stack display='flex' justifyContent='center' alignItems='center' margin={30}><Text>NO COMMENTS</Text></Stack>;
+        if (!comments || comments.length === 0) return <div className="flex justify-center items-center mt-8"><p>NO COMMENTS</p></div>;
         return comments.map((e, index) => 
-            <Stack key={index} marginTop={2} marginBottom={2}>
-                <Text fontWeight={600} fontSize={20}>{e.username}</Text>
-                <Text fontSize={15}>{e.comment}</Text>
-            </Stack>
+            <div key={index} className="my-4">
+                <p className="font-semibold text-xl">{e.username}</p>
+                <p className="text-lg">{e.comment}</p>
+            </div>
         )
     }
 
@@ -89,36 +88,36 @@ function SpecificPGScreen() {
     return (
         <>
         <HeaderComponent newEntryPage={true}/>
-        <div className="specificPGScreenMainOne">
-            <Text fontWeight={900} fontSize={40}>{pgDetails.pgName}</Text>
-            <Text fontSize={20}>{pgDetails.pgLocation}</Text>
-            <Text fontWeight={600} fontSize={20} marginTop={5}>OverallRating : {calculateTotalRating(pgDetails.overallRating)}/5</Text>
-            <Stack display='flex' alignItems='center' justifyContent='center' marginTop={10}>
-                <Image src={pgDetails.pgImage} borderRadius={20} width={500}/>
-            </Stack>
-        </div>
-        <div className='specificPGScreenMainTwo'>
-            <div className='rating'>
-                <Text fontWeight={600} marginBottom={2} marginTop={2}>Location Convienence : {calculateTotalRating(pgDetails.locationCondition)}/5.0</Text>
-                <Text fontWeight={600} marginBottom={2} marginTop={2}>Room Condition : {calculateTotalRating(pgDetails.roomCondition)}/5.0</Text>
-                <Text fontWeight={600} marginBottom={2} marginTop={2}>Bathroom Condition : {calculateTotalRating(pgDetails.bathroomCondition)}/5.0</Text>
-                <Stack marginBottom={2} marginTop={2}>
-                    <Text fontWeight={600}>Facilities</Text>
-                    <Stack display='flex' flexDir='row' alignItems='center' justifyContent='space-evenly' width='100%' flexWrap='wrap' marginBottom={2} marginTop={2}>
-                        {showingFacilities()}
-                    </Stack>
-                </Stack>
-                <Text fontWeight={600} marginBottom={2} marginTop={2}>Rent : {pgDetails.Price}</Text>
+        <div className="p-4 bg-white shadow-md rounded-lg">
+            <h1 className="font-extrabold text-4xl">{pgDetails.pgName}</h1>
+            <p className="text-xl">{pgDetails.pgLocation}</p>
+            <p className="font-semibold text-xl mt-5">OverallRating: {calculateTotalRating(pgDetails.overallRating)}/5</p>
+            <div className="flex justify-center mt-10">
+                <img src={pgDetails.pgImage} alt="PG" className="rounded-lg w-96"/>
             </div>
-            <div className='comments'>
-                <Stack display='flex' flexDir='row' flexWrap='wrap' alignItems='center' justifyContent='space-between' marginBottom={5}>
-                    <Text fontWeight={900} fontSize={20}>Comments</Text>
-                    <Button colorScheme='teal' onClick={() => addingComment()}>Add Comments and Rating</Button>
-                </Stack>
-                <Divider />
-                <Stack>
+        </div>
+        <div className="p-4 mt-10 space-y-8">
+            <div className="space-y-4">
+                <p className="font-semibold text-lg">Location Convenience: {calculateTotalRating(pgDetails.locationCondition)}/5.0</p>
+                <p className="font-semibold text-lg">Room Condition: {calculateTotalRating(pgDetails.roomCondition)}/5.0</p>
+                <p className="font-semibold text-lg">Bathroom Condition: {calculateTotalRating(pgDetails.bathroomCondition)}/5.0</p>
+                <div className="space-y-2">
+                    <p className="font-semibold">Facilities</p>
+                    <div className="flex flex-wrap justify-evenly">
+                        {showingFacilities()}
+                    </div>
+                </div>
+                <p className="font-semibold text-lg">Rent: {pgDetails.Price}</p>
+            </div>
+            <div>
+                <div className="flex justify-between items-center mb-4">
+                    <h2 className="font-extrabold text-xl">Comments</h2>
+                    <button onClick={() => addingComment()} className="bg-teal-500 text-white py-2 px-4 rounded-md">Add Comment and Rating</button>
+                </div>
+                <hr />
+                <div>
                     {showingComments()}
-                </Stack>
+                </div>
             </div>
         </div>
         </>

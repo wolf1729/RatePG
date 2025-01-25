@@ -1,13 +1,11 @@
 /* eslint-disable react/prop-types */
 import '../styles/homePageHeaderStyle.css';
-import { Stack, Button, Text } from '@chakra-ui/react';
 import { MdAir } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import SideNavigation from './sideNavigation';
 
 function HeaderComponent({ searchScreen = false, newEntryPage = false }) {
-    const user = useSelector((state) => state.user)
+    const user = useSelector((state) => state.user);
     const navigation = useNavigate();
 
     const addNewPGFunction = () => {
@@ -21,37 +19,49 @@ function HeaderComponent({ searchScreen = false, newEntryPage = false }) {
     const buttonFunction = () => {
         if (searchScreen === true) {
             if (user.username !== null) {
-                return (
-                    <SideNavigation user={user} />
-                );
+                return <p>no user</p>
             }
 
             return (
-                <Stack display='flex' flexDir='row' flexWrap='wrap' alignItems='center' justifyContent='space-evenly'>
-                    <Button colorScheme='green' paddingLeft={[0, 8]} paddingRight={[0, 8]} onClick={addNewPGFunction} size={['xs', 'md']}>Add Your PG</Button>
-                </Stack>
-            )
-
+                <div className="flex flex-wrap items-center justify-evenly">
+                    <button
+                        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 text-sm md:text-base"
+                        onClick={addNewPGFunction}
+                    >
+                        Add Your PG
+                    </button>
+                </div>
+            );
         } else if (newEntryPage === true) {
-            return <Button colorScheme='green' paddingLeft={8} paddingRight={8} onClick={() => navigation('/search')} size={['xs', 'md']}>Search Your PG</Button>;
+            return (
+                <button
+                    className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 text-sm md:text-base"
+                    onClick={() => navigation('/search')}
+                >
+                    Search Your PG
+                </button>
+            );
         } else {
-            return <Button colorScheme='orange' paddingLeft={8} paddingRight={8} size={['xs', 'md']} onClick={() => navigation('/FAQ')}>FAQ</Button>;
+            return (
+                <button
+                    className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 text-sm md:text-base"
+                    onClick={() => navigation('/FAQ')}
+                >
+                    FAQ
+                </button>
+            );
         }
     };
 
     return (
-        <>
-        <div className='homepageHeaderMainContainer'>
-            <Stack display='flex' flexDir='row' alignItems='center' marginBottom={[5, 5]} marginTop={[5, 5]} marginRight={[2, 10]} marginLeft={[2, 10]}>
-                <MdAir size={25}/>
-                <Text fontSize={[15, 25]} fontWeight={800}>RatePG</Text>
-            </Stack>
-            <Stack marginBottom={[5, 5]} marginTop={[5, 5]} marginRight={[2, 10]} marginLeft={[2, 10]}>
-                {buttonFunction()}
-            </Stack>
+        <div className="homepageHeaderMainContainer">
+            <div className="flex items-center mb-5 mt-5 mx-2 md:mx-10">
+                <MdAir size={25} />
+                <span className="text-lg md:text-2xl font-bold ml-2">RatePG</span>
+            </div>
+            <div className="mb-5 mt-5 mx-2 md:mx-10">{buttonFunction()}</div>
         </div>
-        </>
-    ); 
+    );
 }
 
 export default HeaderComponent;

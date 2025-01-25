@@ -1,4 +1,3 @@
-import { Avatar, Stack, Text, Button, Divider } from "@chakra-ui/react"
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { logout } from "../../Store/User/userSlice"
@@ -17,28 +16,33 @@ function ProfileScreen() {
     // }
 
     return (
-        <div className="w-[100vw] mt-5">
-            <Stack width='100%' display='flex' flexDirection={['column', 'row']} alignItems={['center', 'flex-start']} justifyContent='center'>
-                <Stack display="flex" flexDirection="row" alignItems="center" justifyContent="center">
-                    <Avatar src={ user.img || <GoPerson />} size='xl' />
-                    <Text fontSize={40}>{user.username}</Text>
-                </Stack>
-            </Stack>
-            <Stack width='100%' display='flex' flexDirection='column' alignItems='center' marginTop={20} >
-                <Text>PG's Uploaded</Text>
-                <Divider width='80%' />
-                <Stack>
-                    {
-                        pgUploaded.length === 0 
-                        ? 
-                        <Stack marginTop={50}>
-                            <Text>You have uploaded 0 PG's</Text>
-                        </Stack>
-                        :
-                        <Stack></Stack>
-                    }
-                </Stack>
-            </Stack>
+        <div className="w-full mt-5">
+            <div className="w-full flex flex-col md:flex-row items-center justify-center">
+                <div className="flex items-center justify-center">
+                    <div className="w-24 h-24 rounded-full overflow-hidden flex items-center justify-center bg-gray-200">
+                        {user.img ? (
+                            <img src={user.img} alt="User Avatar" className="w-full h-full object-cover" />
+                        ) : (
+                            <GoPerson className="w-full h-full text-gray-500" />
+                        )}
+                    </div>
+                    <p className="text-3xl ml-4">{user.username}</p>
+                </div>
+            </div>
+
+            <div className="w-full flex flex-col items-center mt-20">
+                <p className="text-lg">PG's Uploaded</p>
+                <hr className="w-4/5 mt-2" />
+                <div className="mt-10">
+                    {pgUploaded.length === 0 ? (
+                        <div className="mt-12">
+                            <p>You have uploaded 0 PG's</p>
+                        </div>
+                    ) : (
+                        <div>{/* Display uploaded PGs here */}</div>
+                    )}
+                </div>
+            </div>
         </div>
     )
 }
