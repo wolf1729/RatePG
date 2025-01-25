@@ -12,7 +12,7 @@ function HomePageOne() {
                 <p className="text-3xl font-bold">Homes</p>
                 <p className="text-lg text-gray-500 mt-2">Discover the Best PG Accomodations Near You</p>
                 <button
-                    className="bg-orange-500 text-black py-3 px-10 mt-6 hover:bg-orange-600 transition duration-300"
+                    className="bg-orange-500 text-white py-3 px-10 mt-6 hover:bg-orange-600 transition duration-300"
                     onClick={() => navigation('/search')}
                 >
                     Find Your Perfect PG

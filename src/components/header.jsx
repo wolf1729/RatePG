@@ -3,6 +3,7 @@ import '../styles/homePageHeaderStyle.css';
 import { MdAir } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { GoPerson } from 'react-icons/go';
 
 function HeaderComponent({ searchScreen = false, newEntryPage = false }) {
     const user = useSelector((state) => state.user);
@@ -19,7 +20,12 @@ function HeaderComponent({ searchScreen = false, newEntryPage = false }) {
     const buttonFunction = () => {
         if (searchScreen === true) {
             if (user.username !== null) {
-                return <p>no user</p>
+                return (
+                    <div className='flex flex-row items-center'>
+                        <img style={{ borderRadius: '100%', width: 40, height: 40 }} src={ user.img || <GoPerson /> } />
+                        <p className='font-sm md:text-2xl ml-2'>{user.username}</p>
+                    </div>
+                )
             }
 
             return (
