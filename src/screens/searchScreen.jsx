@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 import { useSelector } from 'react-redux';
 import PgCardComponent from '../components/pgCardComponent';
+import { CircularProgress } from '@mui/material';
 
 function SearchScreen() {
     const navigate = useNavigate();
@@ -117,7 +118,8 @@ function SearchScreen() {
                 </button>
             </div>
 
-            <div className='mainPageSearchResultContainer grid grid-cols-1 md:grid-cols-3 gap-4 mt-10'>
+            <div className={`mainPageSearchResultContainer flex flex-row items-center ${ pgDetails.length !== 0 ? "" : "justify-center"} mt-10`}>
+                { pgDetails.length === 0 && <CircularProgress /> }
                 {pgDetails.map((pg, index) => (
                     <PgCardComponent key={index} index={index} pg={pg} calculateOverallRating={calculateOverallRating} navigate={navigate} />
                 ))}
