@@ -24,7 +24,7 @@ function HeaderComponent({ searchScreen = false, newEntryPage = false }) {
         if (searchScreen === true) {
             if (user.username !== null) {
                 return (
-                    <div className='flex flex-row items-center' onClick={() => setSideDrawer(true)}>
+                    <div className='flex flex-row items-center cursor-pointer' onClick={() => setSideDrawer(true)}>
                         <img style={{ borderRadius: '100%', width: 40, height: 40 }} src={ user.img || <GoPerson /> } />
                         <p className='font-sm md:text-2xl ml-2'>{user.username}</p>
                     </div>
