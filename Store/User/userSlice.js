@@ -156,8 +156,11 @@ const userSlice = createSlice({
             state.username = null;
             state.userId = null;
             state.token = null;
+            state.img = null;
+            state.uid = null;
+            state.email = null;
             state.status = 'idle';
-            state.error = null;
+            state.error = null
         }
     },
     extraReducers: (builder) => {

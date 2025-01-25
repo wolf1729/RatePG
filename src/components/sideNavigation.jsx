@@ -4,10 +4,11 @@ import { Avatar, Button, Stack, Text, Drawer, DrawerBody, DrawerOverlay, DrawerF
 import { GoPerson } from "react-icons/go";
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { logout } from '../../Store/User/userSlice';
 
 function SideNavigation({ user }) {
+    // const user = useSelector((state) => state.user)
     const { isOpen, onOpen, onClose } = useDisclosure();
     const btnRef = useRef();
     const navigation = useNavigate()
@@ -29,7 +30,7 @@ function SideNavigation({ user }) {
     return (
         <div>
             <Stack display='flex' flexDir='row' flexWrap='wrap' alignItems='center' justifyContent='space-evenly' ref={btnRef} onClick={onOpen}>
-                <Avatar size='sm' src={<GoPerson />} />
+                <Avatar size='sm' src={ user.img || <GoPerson />} />
                 <Text fontSize={[15, 25]}>{user.username}</Text>
             </Stack>
             <Drawer

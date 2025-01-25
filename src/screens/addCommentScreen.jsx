@@ -6,9 +6,10 @@ import { Input, Slider, SliderTrack, SliderFilledTrack, SliderThumb, Box, Text, 
 import { useNavigate, useParams } from 'react-router-dom';
 import { addNewComment } from '../../utils/commentAPICalls';
 import { updateValuesComment } from '../../utils/pgAPICalls';
-import Cookies from 'js-cookie';
+import { useSelector } from 'react-redux';
 
 function NewCommentScreen() {
+    const user = useSelector((state) => state.user)
     const { pgId } = useParams()
     const navigate = useNavigate()
     const toast = useToast()
@@ -18,22 +19,13 @@ function NewCommentScreen() {
     const [bathroomCondition, setbathroomCondition] = useState([])
     const [locationConvenience, setLocationConvenience] = useState([])
     const [overallRating, setOverallRating] = useState([])
-    const [userId, setUserId] = useState('')
 
-    // useEffect(() => {
-    //     const gettingUsername = async() => {
-    //         try{
-    //             await setUserId(Cookies.get('userId'))
-    //             const result = await usernameAPICall(userId)
-    //             setName(result)
-    //         }
-    //         catch(err) {
-    //             console.log(err)
-    //         }
-    //     }
-
-    //     gettingUsername()
-    // })
+    useEffect(() => {
+        console.log(user)
+        if (user.uid === null){
+            navigate('/loginRegistration')
+        }
+    }, [navigate, user])
 
     const addNewPGFunction = async() => {
         if (name === '' && comment === ''){

@@ -1,30 +1,27 @@
 import { Avatar, Stack, Text, Button, Divider } from "@chakra-ui/react"
 import { useState } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { logout } from "../../Store/User/userSlice"
 import { useNavigate } from "react-router-dom"
+import { GoPerson } from "react-icons/go"
 
 function ProfileScreen() {
+    const user = useSelector((state) => state.user)
     const [pgUploaded, setPgUploaded] = useState([])
     const dispatch = useDispatch()
     const navigation = useNavigate()
 
-    const logoutFunction = () => {
-        dispatch(logout())
-        navigation("/search")
-    }
+    // const logoutFunction = () => {
+    //     dispatch(logout())
+    //     navigation("/search")
+    // }
 
     return (
         <div className="w-[100vw] mt-5">
             <Stack width='100%' display='flex' flexDirection={['column', 'row']} alignItems={['center', 'flex-start']} justifyContent='center'>
-                <Avatar src="" size='xl' />
-                <Stack display='flex' flexDirection='column' alignItems='center'>
-                    <Text fontSize={40}>Username</Text>
-                    <Stack display='flex' flexDirection='column' alignItems='center' justifyContent='space-between'>
-                        <Button size='sm'>Change Password</Button>
-                        <Button size='sm'>Upload Profile Pic</Button>
-                        <Button size='sm' colorScheme="red" onClick={() => logoutFunction()}>LogOut</Button>
-                    </Stack>
+                <Stack display="flex" flexDirection="row" alignItems="center" justifyContent="center">
+                    <Avatar src={ user.img || <GoPerson />} size='xl' />
+                    <Text fontSize={40}>{user.username}</Text>
                 </Stack>
             </Stack>
             <Stack width='100%' display='flex' flexDirection='column' alignItems='center' marginTop={20} >
