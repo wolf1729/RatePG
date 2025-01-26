@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { logout } from "../../Store/User/userSlice"
@@ -10,10 +11,10 @@ function ProfileScreen() {
     const dispatch = useDispatch()
     const navigation = useNavigate()
 
-    // const logoutFunction = () => {
-    //     dispatch(logout())
-    //     navigation("/search")
-    // }
+    const logoutFunction = () => {
+        dispatch(logout())
+        navigation("/search")
+    }
 
     return (
         <div className="w-full mt-5">

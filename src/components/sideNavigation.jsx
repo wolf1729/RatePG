@@ -43,12 +43,22 @@ function SideNavigation({ user, isOpen, setIsOpen }) {
                         <Divider />
                         <div className="text-center my-4">
                             <p
+                                onClick={() => console.log('Bookmarked Pg')}
+                                className="text-lg cursor-pointer text-blue-600"
+                            >
+                                Bookmarked
+                            </p>
+                        </div>
+                        <Divider />
+                        <div className="text-center my-4">
+                            <p
                                 onClick={() => navigate('/profile')}
                                 className="text-lg cursor-pointer text-blue-600"
                             >
                                 Profile
                             </p>
                         </div>
+                        
                     </div>
 
                     {/* LogOut button at the bottom */}
