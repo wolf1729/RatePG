@@ -12,7 +12,7 @@ function MobileViewDetails({ pgDetails, calculateTotalRating, showingFacilities,
     };
 
     return (
-        <div className="w-[90%] mx-auto mt-4">
+        <div className="w-[90%] mx-auto mt-4 mb-10">
             <Tabs
                 value={section}
                 onChange={sectionChange}

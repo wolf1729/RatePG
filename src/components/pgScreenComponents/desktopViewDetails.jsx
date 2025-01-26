@@ -7,7 +7,7 @@ function DesktopViewDetails({
     showingComments,
   }) {
     return (
-      <div className="p-4 mt-10 space-y-8 flex flex-wrap md:flex-nowrap justify-evenly items-start space-x-4">
+      <div className="p-4 mt-10 mb-5 space-y-8 flex flex-wrap md:flex-nowrap justify-evenly items-start space-x-4">
         {/* PG Details Section */}
         <div className="w-[30%] shadow-lg p-4 rounded-xl border border-gray-300">
           <p className="font-semibold text-lg">
