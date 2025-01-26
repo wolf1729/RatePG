@@ -8,7 +8,7 @@ import { TbAirConditioning } from "react-icons/tb";
 export const facilitiesDetails = [
     {
         facilitiesName: "Meals",
-        facilitiesValue: "meals",
+        facilitiesValue: "Meals",
         icon: <GiHotMeal size={25} />
     },
     {
@@ -18,42 +18,42 @@ export const facilitiesDetails = [
     },
     {
         facilitiesName: "Laundry Service",
-        facilitiesValue: "laundryService",
+        facilitiesValue: "Laundry Service",
         icon: <GiClothes size={25} />
     },
     {
         facilitiesName: "Wi-fi",
-        facilitiesValue: "wifi",
+        facilitiesValue: "Wi-fi",
         icon: <FaWifi />
     },
     {
         facilitiesName: "Security",
-        facilitiesValue: "security",
+        facilitiesValue: "Security",
         icon: <GiCctvCamera />
     },
     {
         facilitiesName: "Common Area",
-        facilitiesValue: "commonArea",
+        facilitiesValue: "Common Area",
         icon: <PiMapPinSimpleAreaBold size={25} />
     },
     {
         facilitiesName: "Transportation",
-        facilitiesValue: "transportation",
+        facilitiesValue: "Transportation",
         icon: <MdEmojiTransportation size={25} />
     },
     {
         facilitiesName: "Gym",
-        facilitiesValue: "gym",
+        facilitiesValue: "Gym",
         icon: <CgGym size={25} />
     },
     {
         facilitiesName: "TV",
-        facilitiesValue: "tv",
+        facilitiesValue: "TV",
         icon: <FaTv size={25} />
     },
     {
         facilitiesName: "Air Conditioning",
-        facilitiesValue: "airConditioning",
+        facilitiesValue: "Air Conditioning",
         icon: <TbAirConditioning size={25} />
     },
   ]

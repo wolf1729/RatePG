@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { FormControlLabel, Checkbox } from "@mui/material";
+import EachFacilityComponent from "./eachFacilityComponent";
 
 function FacilitiesComponent({ icon, handleFacilityChange, facilities, facilityName, facilityValue }) {
     return (
@@ -12,10 +13,7 @@ function FacilitiesComponent({ icon, handleFacilityChange, facilities, facilityN
                 />
             }
             label={
-                <div className="flex flex-row items-center mr-2">
-                    <p className="mr-2">{facilityName}</p>
-                    {icon}
-                </div>
+                <EachFacilityComponent icon={icon} facilityName={facilityName} />
             }
             className="border border-black rounded-md m-2"
         />
