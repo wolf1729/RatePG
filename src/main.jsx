@@ -11,6 +11,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
+        {/* <script src={`https://maps.olacabs.com/v1/map.js?key=${import.meta.env.VITE_OLA_MAPS_API_KEY}`}></script> */}
         <Router />
         <Analytics />
       </PersistGate>

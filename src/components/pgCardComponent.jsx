@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 function PgCardComponent({ pg, calculateOverallRating, navigate }) {
     return (
-        <div className="w-[150px] md:w-[300px] h-[300px] md:h-[450px] shadow-lg p-4 rounded-xl flex flex-col">
+        <div className="w-[150px] md:w-[300px] h-[300px] md:h-[450px] shadow-lg p-4 rounded-xl border border-gray-300 mb-5 flex flex-col">
             <div className="h-[80%]">
                 <div className="flex justify-center mb-4">
                     <img 

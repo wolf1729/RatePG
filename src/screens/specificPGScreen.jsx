@@ -17,7 +17,7 @@ function SpecificPGScreen() {
     const { pgID } = useParams()
     const navigate = useNavigate()
     const [pgDetails, setPGDetails] = useState([])
-    const [comments, setComments] = useState([])
+    const [comments, setComments] = useState([]) 
 
     useEffect(() => {
         const gettingPGDetails = async() => {
@@ -93,11 +93,11 @@ function SpecificPGScreen() {
     return (
         <>
         <HeaderComponent newEntryPage={true}/>
-        <div className="p-4 bg-white shadow-md rounded-lg">
+        <div className="p-4 bg-white">
             <h1 className="font-extrabold text-4xl">{pgDetails.pgName}</h1>
             <p className="text-xl">{pgDetails.pgLocation}</p>
             <p className="font-semibold text-xl mt-5">OverallRating: {calculateTotalRating(pgDetails.overallRating)}/5</p>
-            <div className="flex justify-center mt-10">
+            <div className="flex items-center justify-center mt-10 w-[100%]">
                 <ImageLocationComponent pgDetails={pgDetails} />
             </div>
         </div>
