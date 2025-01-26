@@ -1,8 +1,6 @@
 import { useState } from "react";
 import HeaderComponent from "../components/header";
-import { GiHotMeal } from "react-icons/gi";
-import { PiHouseLight } from "react-icons/pi";
-import { Button, TextField, Slider, Checkbox, FormControlLabel, FormGroup, Typography, Box, MenuItem } from "@mui/material";
+import { Button, TextField, Slider, FormGroup, Typography, Box, MenuItem } from "@mui/material";
 import { addNewPG } from '../../utils/pgAPICalls';
 import { uploadFileInStorage } from '../../utils/firebaseFunctions';
 import { useNavigate } from "react-router-dom";
@@ -95,25 +93,25 @@ function NewPGEntryScreen() {
   };
 
   return (
-    <>
+    <div>
       <HeaderComponent newEntryPage={true} />
-      <Box sx={{ maxWidth: "600px", margin: "auto", p: 3 }}>
+      <div className="w-[100%] p-3 flex flex-col items-center justify-center">
         <TextField
           label="PG Name"
           variant="outlined"
-          fullWidth
           value={pgName}
           onChange={(e) => setPGName(e.target.value)}
           sx={{ mb: 2 }}
+          className="w-[80%] md:w-[60%]"
         />
 
         <TextField
           label="PG Location"
           variant="outlined"
-          fullWidth
           value={pgLocation}
           onChange={handleLocationChange}
           sx={{ mb: 2 }}
+          className="w-[80%] md:w-[60%]"
         />
         {showDropdown && (
           <Box sx={{ maxHeight: 200, overflowY: "auto", border: 1, borderRadius: 1, p: 1 }}>
@@ -125,7 +123,7 @@ function NewPGEntryScreen() {
           </Box>
         )}
 
-        <Typography variant="subtitle1" sx={{ mt: 2 }}>
+        <Typography variant="subtitle1" sx={{ mt: 2 }} className="w-[80%] md:w-[60%]">
           Room Condition
         </Typography>
         <Slider
@@ -135,10 +133,10 @@ function NewPGEntryScreen() {
           marks
           min={0}
           max={5}
-          sx={{ mb: 2 }}
+          sx={{ mb: 2, width: '80%', maxWidth: '60%' }}
         />
 
-        <Typography variant="subtitle1">Bathroom Condition</Typography>
+        <Typography variant="subtitle1" className="w-[80%] md:w-[60%]">Bathroom Condition</Typography>
         <Slider
           value={bathroomCondition}
           onChange={(e, value) => setBathroomCondition(value)}
@@ -146,10 +144,10 @@ function NewPGEntryScreen() {
           marks
           min={0}
           max={5}
-          sx={{ mb: 2 }}
+          sx={{ mb: 2, width: '80%', maxWidth: '60%' }}
         />
 
-        <Typography variant="subtitle1">Location Convenience</Typography>
+        <Typography variant="subtitle1" className="w-[80%] md:w-[60%]">Location Convenience</Typography>
         <Slider
           value={locationConvenience}
           onChange={(e, value) => setLocationConvenience(value)}
@@ -157,10 +155,10 @@ function NewPGEntryScreen() {
           marks
           min={0}
           max={5}
-          sx={{ mb: 2 }}
+          sx={{ mb: 2, width: '80%', maxWidth: '60%' }}
         />
 
-        <Typography variant="subtitle1">Overall Rating</Typography>
+        <Typography variant="subtitle1" className="w-[80%] md:w-[60%]">Overall Rating</Typography>
         <Slider
           value={overallRating}
           onChange={(e, value) => setOverallRating(value)}
@@ -168,26 +166,26 @@ function NewPGEntryScreen() {
           marks
           min={0}
           max={5}
-          sx={{ mb: 2 }}
+          sx={{ mb: 2, width: '80%', maxWidth: '60%' }}
         />
 
         <TextField
           label="Rent"
           variant="outlined"
-          fullWidth
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           sx={{ mb: 2 }}
+          className="w-[80%] md:w-[60%]"
         />
 
-        <Typography variant="subtitle1">Facilities</Typography>
-        <FormGroup row sx={{ mb: 2 }}>
+        <Typography variant="subtitle1" className="w-[80%] md:w-[60%]">Facilities</Typography>
+        <FormGroup row sx={{ alignItems: 'center', justifyContent: 'center' }} className="w-[80%] md:w-[60%]">
           { facilitiesDetails.map((e, index) => (
             <FacilitiesComponent key={index} icon={e.icon} handleFacilityChange={handleFacilityChange} facilities={facilities} facilityName={e.facilitiesName} facilityValue={e.facilitiesValue} />
           ))}
         </FormGroup>
 
-        <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+        <Box sx={{ display: "flex", alignItems: "center", mb: 2, justifyContent:'center', mt: 2 }} className="w-[80%] md:w-[60%]">
           <Typography sx={{ mr: 2 }}>Upload Image :</Typography>
           <Button variant="contained" component="label">
             Choose File
@@ -198,8 +196,8 @@ function NewPGEntryScreen() {
         <Button variant="contained" color="primary" onClick={addNewPGFunction}>
           Submit
         </Button>
-      </Box>
-    </>
+      </div>
+    </div>
   );
 }
 

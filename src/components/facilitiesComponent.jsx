@@ -12,11 +12,12 @@ function FacilitiesComponent({ icon, handleFacilityChange, facilities, facilityN
                 />
             }
             label={
-                <div className="flex flex-row items-center border border-black rounded-md p-1">
+                <div className="flex flex-row items-center mr-2">
                     <p className="mr-2">{facilityName}</p>
                     {icon}
                 </div>
             }
+            className="border border-black rounded-md m-2"
         />
     )
 }
