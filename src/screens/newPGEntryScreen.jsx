@@ -7,6 +7,8 @@ import { addNewPG } from '../../utils/pgAPICalls';
 import { uploadFileInStorage } from '../../utils/firebaseFunctions';
 import { useNavigate } from "react-router-dom";
 import notAvailableImage from "../assets/noAvailable.jpg";
+import { facilitiesDetails } from "../../utils/facilities";
+import FacilitiesComponent from "../components/facilitiesComponent";
 
 function NewPGEntryScreen() {
   const imageToUse = notAvailableImage;
@@ -180,36 +182,9 @@ function NewPGEntryScreen() {
 
         <Typography variant="subtitle1">Facilities</Typography>
         <FormGroup row sx={{ mb: 2 }}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={facilities.includes("meals")}
-                onChange={handleFacilityChange}
-                value="meals"
-              />
-            }
-            label={
-              <>
-                <GiHotMeal size={20} />
-                Meals
-              </>
-            }
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={facilities.includes("houseKeeping")}
-                onChange={handleFacilityChange}
-                value="houseKeeping"
-              />
-            }
-            label={
-              <div className="flex flex-row items-center border border-black rounded-md p-1">
-                <p className="mr-2">House Keeping</p>
-                <PiHouseLight size={20} />
-              </div>
-            }
-          />
+          { facilitiesDetails.map((e, index) => (
+            <FacilitiesComponent key={index} icon={e.icon} handleFacilityChange={handleFacilityChange} facilities={facilities} facilityName={e.facilitiesName} facilityValue={e.facilitiesValue} />
+          ))}
         </FormGroup>
 
         <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
