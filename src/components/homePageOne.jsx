@@ -6,7 +6,7 @@ function HomePageOne() {
     const navigation = useNavigate()
     return (
         <>
-        <div className="flex flex-col md:flex-row items-center justify-between p-8">
+        <div className="flex flex-col-reverse md:flex-row items-center justify-between p-8">
             <div className="text-center md:text-left">
                 <p className="text-3xl font-bold">Rate Your PG</p>
                 <p className="text-3xl font-bold">Homes</p>
