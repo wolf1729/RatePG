@@ -1,5 +1,4 @@
 import { useState } from "react";
-import HeaderComponent from "../components/header";
 import { Button, TextField, Slider, FormGroup, Typography, Box, MenuItem } from "@mui/material";
 import { addNewPG } from '../../utils/pgAPICalls';
 import { uploadFileInStorage } from '../../utils/firebaseFunctions';
@@ -7,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import notAvailableImage from "../assets/noAvailable.jpg";
 import { facilitiesDetails } from "../../utils/facilities";
 import FacilitiesComponent from "../components/facilitiesComponent";
+import ReturnHeader from "../components/returnHeader";
 
 function NewPGEntryScreen() {
   const imageToUse = notAvailableImage;
@@ -94,7 +94,7 @@ function NewPGEntryScreen() {
 
   return (
     <div>
-      <HeaderComponent newEntryPage={true} />
+      <ReturnHeader />
       <div className="w-[100%] p-3 flex flex-col items-center justify-center">
         <TextField
           label="PG Name"

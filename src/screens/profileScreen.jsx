@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { logout } from "../../Store/User/userSlice"
 import { useNavigate } from "react-router-dom"
 import { GoPerson } from "react-icons/go"
+import ReturnHeader from "../components/returnHeader"
 
 function ProfileScreen() {
     const user = useSelector((state) => state.user)
@@ -17,10 +18,12 @@ function ProfileScreen() {
     }
 
     return (
+        <>
+        <ReturnHeader settings={true} />
         <div className="w-full mt-5">
             <div className="w-full flex flex-col md:flex-row items-center justify-center">
                 <div className="flex items-center justify-center">
-                    <div className="w-24 h-24 rounded-full overflow-hidden flex items-center justify-center bg-gray-200">
+                    <div className="md:w-24 w-12 md:h-24 h-12 rounded-full overflow-hidden flex items-center justify-center bg-gray-200">
                         {user.img ? (
                             <img src={user.img} alt="User Avatar" className="w-full h-full object-cover" />
                         ) : (
@@ -28,6 +31,9 @@ function ProfileScreen() {
                         )}
                     </div>
                     <p className="text-3xl ml-4">{user.username}</p>
+                </div>
+                <div>
+                    
                 </div>
             </div>
 
@@ -45,6 +51,7 @@ function ProfileScreen() {
                 </div>
             </div>
         </div>
+        </>
     )
 }
 
