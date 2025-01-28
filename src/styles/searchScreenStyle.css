@@ -3,14 +3,6 @@
     padding: 0px;
 }
 
-.mainPageSearchContainer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-evenly;
-}
-
 .mainPageSearchResultContainer {
     display: flex;
     flex-direction: row;

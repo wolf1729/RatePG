@@ -90,29 +90,26 @@ function SearchScreen() {
     return (
         <>
             <HeaderComponent searchScreen={true} isVerified={verified} />
-            <div className="mainPageSearchContainer flex flex-col items-center mt-5">
-                <div className="mb-4 flex items-center">
-                    <select 
-                        value={searchOption} 
-                        onChange={(e) => setSearchOption(e.target.value)} 
-                        className="p-2 border border-gray-300 rounded-md mr-4">
-                        <option value='name'>Name</option>
-                        <option value='location'>Location</option>
-                    </select>
-                    <div className="w-[75%]">
-                        <ReactSearchAutocomplete
-                            items={pgDetails}
-                            onSearch={handleOnSearch}
-                            onHover={handleOnHover}
-                            onSelect={handleOnSelect}
-                            onFocus={handleOnFocus}
-                            autoFocus
-                            formatResult={formatResult}
-                        />
-                    </div>
+            <div className="flex flex-row items-center justify-evenly mt-5">
+                <select 
+                    value={searchOption} 
+                    onChange={(e) => setSearchOption(e.target.value)} 
+                    className="p-2 border border-gray-300 rounded-md m-2">
+                    <option value='name'>Name</option>
+                    <option value='location'>Location</option>
+                </select>
+                <div className="w-[75%]">
+                    <ReactSearchAutocomplete
+                        items={pgDetails}
+                        onSearch={handleOnSearch}
+                        onHover={handleOnHover}
+                        onSelect={handleOnSelect}
+                        onFocus={handleOnFocus}
+                        formatResult={formatResult}
+                    />
                 </div>
                 <button 
-                    className="px-4 py-2 bg-blue-500 text-white rounded-md" 
+                    className="px-4 py-2 bg-blue-500 text-white rounded-md m-2" 
                     onClick={searchButtonFunction}>
                     Search
                 </button>
