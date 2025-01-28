@@ -1,9 +1,9 @@
-import PropTypes from "prop-types";
+/* eslint-disable react/prop-types */
 import { FaArrowLeft } from "react-icons/fa6";
 import { IoMdSettings } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
-function ReturnHeader({ settings = false }) {
+function ReturnHeader({ settings = false, setSettingsModal, settingsModal }) {
     const navigate = useNavigate();
 
     return (
@@ -31,7 +31,7 @@ function ReturnHeader({ settings = false }) {
                     aria-label="Settings"
                     role="button"
                     tabIndex={0}
-                    onClick={() => console.log("Settings clicked")} // Add desired action here
+                    onClick={() => setSettingsModal(!settingsModal)} 
                     onKeyDown={(e) => e.key === "Enter" && console.log("Settings clicked")}
                 >
                     <IoMdSettings size={30} />
@@ -40,9 +40,5 @@ function ReturnHeader({ settings = false }) {
         </div>
     );
 }
-
-ReturnHeader.propTypes = {
-    settings: PropTypes.bool,
-};
 
 export default ReturnHeader;

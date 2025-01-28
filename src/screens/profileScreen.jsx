@@ -1,25 +1,20 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { logout } from "../../Store/User/userSlice"
-import { useNavigate } from "react-router-dom"
 import { GoPerson } from "react-icons/go"
 import ReturnHeader from "../components/returnHeader"
+import SettingsModal from "../components/Modals/settingsModal"
+import { useSelector } from "react-redux"
 
 function ProfileScreen() {
     const user = useSelector((state) => state.user)
     const [pgUploaded, setPgUploaded] = useState([])
-    const dispatch = useDispatch()
-    const navigation = useNavigate()
+    const [settingsModal, setSettingsModal] = useState(false)
 
-    const logoutFunction = () => {
-        dispatch(logout())
-        navigation("/search")
-    }
+    console.log(user)
 
     return (
         <>
-        <ReturnHeader settings={true} />
+        <ReturnHeader settings={true} setSettingsModal={setSettingsModal} settingsModal={settingsModal} />
         <div className="w-full mt-5">
             <div className="w-full flex flex-col md:flex-row items-center justify-center">
                 <div className="flex items-center justify-center">
@@ -51,6 +46,12 @@ function ProfileScreen() {
                 </div>
             </div>
         </div>
+
+        {
+            settingsModal 
+            &&
+            <SettingsModal setSettingsModal={setSettingsModal} settingsModal={settingsModal} />
+        }
         </>
     )
 }
