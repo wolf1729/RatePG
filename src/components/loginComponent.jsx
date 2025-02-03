@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, loginWithGoogle } from "../../Store/User/userSlice";
 import { useState } from "react";
+import { Alert } from '@mui/material';
 import GoogleButton from "react-google-button";
 
 function LoginComponent() {
@@ -16,7 +17,10 @@ function LoginComponent() {
         const resultAction = await dispatch(loginUser({ email, password }));
 
         if (loginUser.fulfilled.match(resultAction)) {
-            alert(`Welcome, ${resultAction.payload.data.username}!`);
+            // alert(`Welcome, ${resultAction.payload.data.username}!`);
+            <Alert severity="success">
+                Welcome, {resultAction.payload.data.username}!
+            </Alert>
             navigate("/search");
         } else if (loginUser.rejected.match(resultAction)) {
             alert(resultAction.payload || "Login failed");
@@ -27,7 +31,10 @@ function LoginComponent() {
         const resultAction = await dispatch(loginWithGoogle());
 
         if (loginWithGoogle.fulfilled.match(resultAction)) {
-            alert(`Welcome, ${resultAction.payload.data.username}!`);
+            // alert(`Welcome, ${resultAction.payload.data.username}!`);
+            <Alert severity="success">
+                Welcome, {resultAction.payload.data.username}!
+            </Alert>
             navigate("/search");
         } else if (loginWithGoogle.rejected.match(resultAction)) {
             alert(resultAction.payload || "Login failed");
@@ -38,7 +45,7 @@ function LoginComponent() {
     const isLoading = user.status === 'loading';
 
     return (
-        <div className="flex flex-col items-center justify-center h-screen w-full">
+        <div className="flex flex-col items-center justify-center">
             <img src={login} alt="Login" className="w-4/5 md:w-1/5 mb-6" />
             <input
                 type="email"

@@ -3,6 +3,7 @@ import { useState } from "react";
 import registration from '../assets/registration.jpg';
 import { registerUser, registerWithGoogle } from "../../Store/User/userSlice";
 import { useDispatch } from "react-redux";
+import { Alert } from "@mui/material";
 import GoogleButton from "react-google-button";
 
 function RegistrationComponent() {
@@ -15,7 +16,10 @@ function RegistrationComponent() {
     const registrationFunction = async () => {
         const resultAction = await dispatch(registerUser({ username, email, password }));
         if (registerUser.fulfilled.match(resultAction)) {
-            alert(`Welcome, ${resultAction.payload.data.username}!`);
+            // alert(`Welcome, ${resultAction.payload.data.username}!`);
+            <Alert severity="success">
+                `Welcome, {resultAction.payload.data.username}!
+            </Alert>
             navigate("/search");
         } else if (registerUser.rejected.match(resultAction)) {
             alert(resultAction.payload || "Registration failed");
@@ -25,7 +29,10 @@ function RegistrationComponent() {
     const googleRegister = async () => {
         const resultAction = await dispatch(registerWithGoogle());
         if (registerWithGoogle.fulfilled.match(resultAction)) {
-            alert(`Welcome, ${resultAction.payload.data.username}!`);
+            // alert(`Welcome, ${resultAction.payload.data.username}!`);
+            <Alert severity="success">
+                Welcome, {resultAction.payload.data.username}!
+            </Alert>
             navigate("/search");
         } else if (registerWithGoogle.rejected.match(resultAction)) {
             alert(resultAction.payload || "Registration failed");
@@ -33,7 +40,7 @@ function RegistrationComponent() {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center h-screen w-full">
+        <div className="flex flex-col items-center justify-center">
             <img src={registration} alt="Registration" className="w-4/5 md:w-1/5 mb-6" />
             <input
                 type="text"
