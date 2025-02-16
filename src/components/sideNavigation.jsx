@@ -35,7 +35,7 @@ function SideNavigation({ user, isOpen, setIsOpen }) {
                         <div className="text-center mb-4">
                             <p
                                 onClick={addNewPGFunction}
-                                className="text-lg cursor-pointer text-blue-600"
+                                className="text-lg cursor-pointer"
                             >
                                 Add Your PG
                             </p>
@@ -44,7 +44,7 @@ function SideNavigation({ user, isOpen, setIsOpen }) {
                         <div className="text-center my-4">
                             <p
                                 onClick={() => console.log('Bookmarked Pg')}
-                                className="text-lg cursor-pointer text-blue-600"
+                                className="text-lg cursor-pointer"
                             >
                                 Bookmarked
                             </p>
@@ -53,7 +53,7 @@ function SideNavigation({ user, isOpen, setIsOpen }) {
                         <div className="text-center my-4">
                             <p
                                 onClick={() => navigate('/profile')}
-                                className="text-lg cursor-pointer text-blue-600"
+                                className="text-lg cursor-pointer"
                             >
                                 Profile
                             </p>

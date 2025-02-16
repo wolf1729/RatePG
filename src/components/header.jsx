@@ -46,7 +46,7 @@ function HeaderButtons({ searchScreen, newEntryPage, user, navigation, setSideDr
     } else {
         return (
             <button
-                className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 text-sm md:text-base"
+                className="bg-black text-white px-4 py-2 rounded hover:bg-orange-600 text-sm md:text-base"
                 onClick={() => navigation('/FAQ')}
             >
                 FAQ
