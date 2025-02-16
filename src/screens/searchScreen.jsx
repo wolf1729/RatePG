@@ -23,16 +23,27 @@ function SearchScreen() {
     useEffect(() => {
         const fetchPGDetails = async () => {
             try {
-                const allPGData = await fetch(`${import.meta.env.VITE_SERVER}/pgRoutes/allPGs`)
-                const data = await allPGData.json()
-                setPGDetails(data);
-            } catch (err) {
-                console.log(err);
+                const pgData = localStorage.getItem("pgData");
+                
+                if (pgData) {
+                    setPGDetails(JSON.parse(pgData));
+                } else {
+                    const allPGData = await fetch(`${import.meta.env.VITE_SERVER}/pgRoutes/allPGs`);
+                    const data = await allPGData.json();
+                    
+                    localStorage.setItem("pgData", JSON.stringify(data));
+                    
+                    setPGDetails(data);
+                }
+            } 
+            catch (err) {
+                console.log("Error fetching PG details:", err);
             }
         };
-
+    
         fetchPGDetails();
     }, []);
+    
 
     const calculateOverallRating = (overallRatingArray) => {
         let overallRating = 0;
