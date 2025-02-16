@@ -23,7 +23,7 @@ function PgCardComponent({ pg, calculateOverallRating, navigate }) {
             </div>
             <div className="w-full flex flex-row items-center justify-between gap-2 mt-4">
                 <button 
-                    className="px-3 py-2 bg-black text-white text-sm md:text-lg rounded-md flex-1"
+                    className="px-3 py-2 bg-black text-white text-sm md:text-lg hover:bg-gray-500 rounded-md flex-1"
                     onClick={() => navigate(`/pgDetails/${pg?._id}`)}
                 >
                     View Details

@@ -37,7 +37,7 @@ function HomeScreen() {
                 </div>
             </div>
 
-            <div className="flex flex-col items-center justify-center text-center space-y-4 px-4 h-[400px] w-[100%]">
+            <div className="flex flex-col items-center justify-center text-center space-y-4 px-4 h-[500px] w-[100%]">
                 <p className="text-3xl font-bold sm:text-4xl md:text-5xl lg:text-6xl">
                     What Students Say
                 </p>

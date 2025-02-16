@@ -10,6 +10,7 @@ import useResponsive from '../hooks/mobileHook'
 import MobileViewDetails from '../components/pgScreenComponents/mobileViewDetails'
 import DesktopViewDetails from '../components/pgScreenComponents/desktopViewDetails'
 import ImageLocationComponent from '../components/pgScreenComponents/imageLocationComponent'
+import ReturnHeader from '../components/returnHeader'
 
 function SpecificPGScreen() {
     const isMobile = useResponsive();
@@ -92,7 +93,7 @@ function SpecificPGScreen() {
 
     return (
         <>
-        <HeaderComponent newEntryPage={true}/>
+        <ReturnHeader />
         <div className="p-4 bg-white">
             <h1 className="font-extrabold text-4xl">{pgDetails.pgName}</h1>
             <p className="text-xl">{pgDetails.pgLocation}</p>

@@ -21,7 +21,7 @@ function HeaderButtons({ searchScreen, newEntryPage, user, navigation, setSideDr
         ) : (
             <div className="flex flex-wrap items-center justify-evenly">
                 <button
-                    className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 text-sm md:text-base"
+                    className="bg-black text-white px-4 py-2 rounded hover:bg-gray-500 text-sm md:text-base"
                     onClick={() => {
                         if (user.username) {
                             navigation('/newPGEntry');
@@ -30,7 +30,7 @@ function HeaderButtons({ searchScreen, newEntryPage, user, navigation, setSideDr
                         }
                     }}
                 >
-                    Add a PG
+                    Login/Register
                 </button>
             </div>
         );
