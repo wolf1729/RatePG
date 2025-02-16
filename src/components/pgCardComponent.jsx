@@ -14,9 +14,9 @@ function PgCardComponent({ pg, calculateOverallRating, navigate }) {
                         className="w-full h-20 md:h-40 object-cover rounded-lg" 
                     />
                 </div>
-                <div className="flex flex-row items-center justify-between mt-2 w-[100%]">
+                <div className="flex flex-col md:flex-row items-center justify-between mt-2 w-[100%]">
                     <p className="text-black text-xs md:text-sm">Rating: {calculateOverallRating(pg?.overallRating)}/5.0</p>
-                    <p className="text-md md:text-lg text-black font-bold">{pg?.Price}/month</p>
+                    <p className="text-sm md:text-md text-black font-bold">{pg?.Price}/month</p>
                 </div>
             </div>
             <button 
