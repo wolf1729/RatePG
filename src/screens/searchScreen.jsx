@@ -1,7 +1,7 @@
 import '../styles/searchScreenStyle.css';
 import { useState, useEffect } from 'react';
 import HeaderComponent from '../components/header';
-import { allPG, findPGName } from '../../utils/pgAPICalls';
+import { findPGName } from '../../utils/pgAPICalls';
 import { useNavigate } from 'react-router-dom';
 import { ReactSearchAutocomplete } from 'react-search-autocomplete';
 import { useSelector } from 'react-redux';
@@ -23,16 +23,9 @@ function SearchScreen() {
     useEffect(() => {
         const fetchPGDetails = async () => {
             try {
-                const details = await allPG();
-                const formattedDetails = details.map((pg, index) => ({
-                    id: index, 
-                    name: pg.pgName, 
-                    pgLocation: pg.pgLocation, 
-                    pgImage: pg.pgImage, 
-                    overallRating: pg.overallRating,
-                    _id: pg._id
-                }));
-                setPGDetails(formattedDetails);
+                const allPGData = await fetch(`${import.meta.env.VITE_SERVER}/pgRoutes/allPGs`)
+                const data = await allPGData.json()
+                setPGDetails(data);
             } catch (err) {
                 console.log(err);
             }
@@ -72,7 +65,7 @@ function SearchScreen() {
     };
 
     const handleOnSelect = (item) => {
-        setSearchText(item.name || item.pgLocation);  // Modify depending on the search option
+        setSearchText(item.name || item.pgLocation); 
     };
 
     const handleOnFocus = () => {
@@ -109,7 +102,7 @@ function SearchScreen() {
                     />
                 </div>
                 <button 
-                    className="px-4 py-2 bg-blue-500 text-white rounded-md m-2" 
+                    className="px-4 py-2 bg-black text-white rounded-md m-2" 
                     onClick={searchButtonFunction}>
                     Search
                 </button>

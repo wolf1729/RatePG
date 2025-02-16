@@ -32,9 +32,7 @@ const addNewPG = async(pgName, pgLocation, roomCondition, bathroomCondition, loc
 //API call to get all PG's details
 const allPG = async() => {
     try {
-        const allPGData = await fetch(`${baseURL}/allPGs`)
-        const data = allPGData.json()
-        return data
+        
     }
     catch(err) {
         console.log(err)
