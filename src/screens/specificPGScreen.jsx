@@ -1,8 +1,6 @@
 import '../styles/specificPGScreenStyle.css'
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { specificPGusingID } from "../../utils/pgAPICalls"
-import HeaderComponent from "../components/header"
 import { useNavigate } from 'react-router-dom'
 import { showComment } from '../../utils/commentAPICalls'
 import { useSelector } from 'react-redux'
@@ -11,6 +9,8 @@ import MobileViewDetails from '../components/pgScreenComponents/mobileViewDetail
 import DesktopViewDetails from '../components/pgScreenComponents/desktopViewDetails'
 import ImageLocationComponent from '../components/pgScreenComponents/imageLocationComponent'
 import ReturnHeader from '../components/returnHeader'
+import { CircularProgress } from '@mui/material'
+import { div } from 'framer-motion/client'
 
 function SpecificPGScreen() {
     const isMobile = useResponsive();
@@ -23,9 +23,17 @@ function SpecificPGScreen() {
     useEffect(() => {
         const gettingPGDetails = async() => {
             try {
-                const data = await specificPGusingID(pgID)
+                const pgDetails = await fetch(`${import.meta.env.VITE_SERVER}/pgRoutes/PGSearchUsingID`, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        pgID: pgID
+                    }),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    }
+                })
+                const data = await pgDetails.json()
                 setPGDetails(data)
-                console.log(data)
             }
             catch(err) {
                 console.log(err)
@@ -89,6 +97,12 @@ function SpecificPGScreen() {
         catch(err){
             console.log(err)
         }
+    }
+
+    if (pgDetails.length === 0) {
+        return (
+            <div className='w-screen h-screen flex items-center justify-center'><CircularProgress sx={{ color: 'black' }} /></div>
+        )
     }
 
     return (
