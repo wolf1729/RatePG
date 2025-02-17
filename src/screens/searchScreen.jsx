@@ -184,7 +184,7 @@ function SearchScreen() {
             </div>
 
             <div className={`mainPageSearchResultContainer flex flex-row items-center ${ pgDetails.length !== 0 ? "" : "justify-center"} mt-10`}>
-                { pgDetails.length === 0 && <CircularProgress /> }
+                { pgDetails.length === 0 && <CircularProgress sx={{ color: 'black' }} /> }
                 {pgDetails.map((pg, index) => (
                     <PgCardComponent key={index} index={index} pg={pg} calculateOverallRating={calculateOverallRating} navigate={navigate} />
                 ))}

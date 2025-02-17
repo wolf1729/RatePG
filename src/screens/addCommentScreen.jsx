@@ -30,10 +30,43 @@ function NewCommentScreen() {
             return;
         }
         try {
-            const updateValues = await updateValuesComment(pgId, bathroomCondition, roomCondition, locationConvenience, overallRating)
-            const newComment = await addNewComment(pgId, name, comment, bathroomCondition, roomCondition, locationConvenience, overallRating)
+            const updateValuesResponse = await fetch(`${import.meta.env.VITE_SERVER}/pgRoutes/commentUpdateValue`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    pgId: pgId,
+                    bathroomRating: bathroomCondition,
+                    roomRating: roomCondition,
+                    locationRating: locationConvenience,
+                    overallRating: overallRating,
+                    token: user.token
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            })
+            const updateValuesData = await updateValuesResponse.json()
+            console.log(updateValuesData)
 
-            if (updateValues.status === false || newComment.status === false) {
+            const newCommentResponse = await fetch(`${import.meta.env.VITE_SERVER}/commentRoutes/addNewComment`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    pgId: pgId,
+                    username: user.username,
+                    comment: comment,
+                    bathroomRating: bathroomCondition,
+                    roomRating: roomCondition,
+                    locationRating: locationConvenience,
+                    overallRating: overallRating,
+                    token: user.token
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            })
+            const newCommentData = await newCommentResponse.json()
+            console.log(newCommentData)
+
+            if (updateValuesData.status === false || newCommentData.status === false) {
                 alert("Something went wrong");
             } else {
                 alert("PG Added to Database");

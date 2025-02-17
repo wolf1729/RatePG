@@ -10,7 +10,6 @@ import DesktopViewDetails from '../components/pgScreenComponents/desktopViewDeta
 import ImageLocationComponent from '../components/pgScreenComponents/imageLocationComponent'
 import ReturnHeader from '../components/returnHeader'
 import { CircularProgress } from '@mui/material'
-import { div } from 'framer-motion/client'
 
 function SpecificPGScreen() {
     const isMobile = useResponsive();
