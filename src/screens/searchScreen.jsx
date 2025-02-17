@@ -44,6 +44,70 @@ function SearchScreen() {
         fetchPGDetails();
     }, []);
     
+    useEffect(() => {
+        const fetchBookmarkedPG = async () => {
+            try {
+                const bookmarkedPg = localStorage.getItem("bookmarkedPgData");
+                
+                if (bookmarkedPg) {
+                    return
+                } else {
+                    const bookmarkedPGData = await fetch(`${import.meta.env.VITE_SERVER}/userRoutes/getBookmarkedPG`, {
+                        method: 'POST',
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            token: user.token,
+                            uid: user.uid
+                        })
+                    });
+                    const data = await bookmarkedPGData.json();
+                    
+                    localStorage.setItem("bookmarkedPgData", JSON.stringify(data.data));
+                    
+                }
+            } 
+            catch (err) {
+                console.log("Error fetching PG details:", err);
+            }
+        };
+    
+        fetchBookmarkedPG();
+    }, [user]);
+
+    useEffect(() => {
+        const fetchUploadedPG = async () => {
+            try {
+                const uploadedPG = localStorage.getItem("uploadedPgData");
+                
+                if (uploadedPG) {
+                    return
+                } else {
+                    const uploadedPGData = await fetch(`${import.meta.env.VITE_SERVER}/userRoutes/getUploadedPG`, {
+                        method: 'POST',
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            token: user.token,
+                            uid: user.uid
+                        })
+                    });
+                    const data = await uploadedPGData.json();
+                    
+                    localStorage.setItem("uploadedPgData", JSON.stringify(data.data));
+                    
+                    setPGDetails(data);
+                }
+            } 
+            catch (err) {
+                console.log("Error fetching PG details:", err);
+            }
+        };
+    
+        fetchUploadedPG();
+    }, [user]);
 
     const calculateOverallRating = (overallRatingArray) => {
         let overallRating = 0;
