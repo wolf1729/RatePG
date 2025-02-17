@@ -3,15 +3,13 @@ import '../styles/newPGEntryScreenStyle.css'
 import { useState, useEffect } from "react"
 import HeaderComponent from "../components/header"
 import { useNavigate, useParams } from 'react-router-dom';
-import { addNewComment } from '../../utils/commentAPICalls';
-import { updateValuesComment } from '../../utils/pgAPICalls';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 function NewCommentScreen() {
     const user = useSelector((state) => state.user)
     const { pgId } = useParams()
     const navigate = useNavigate()
-    const [name, setName] = useState('')
     const [comment, setComment] = useState('')
     const [roomCondition, setRoomCondition] = useState(0)
     const [bathroomCondition, setBathroomCondition] = useState(0)
@@ -24,59 +22,66 @@ function NewCommentScreen() {
         }
     }, [navigate, user])
 
-    const addNewPGFunction = async () => {
-        if (name === '' && comment === ''){
-            alert("Please fill Name and Comment");
+    const addNewCommentFunction = async () => {
+        if (comment.trim() === '') {
+            toast.warn("Please enter a comment!", {
+                position: "top-center",
+                autoClose: 3000,
+            });
             return;
         }
+    
         try {
-            const updateValuesResponse = await fetch(`${import.meta.env.VITE_SERVER}/pgRoutes/commentUpdateValue`, {
+            const updateValuesPromise = fetch(`${import.meta.env.VITE_SERVER}/pgRoutes/commentUpdateValue`, {
                 method: 'POST',
+                headers: { "Content-type": "application/json; charset=UTF-8" },
                 body: JSON.stringify({
-                    pgId: pgId,
+                    pgId,
                     bathroomRating: bathroomCondition,
                     roomRating: roomCondition,
                     locationRating: locationConvenience,
-                    overallRating: overallRating,
+                    overallRating,
                     token: user.token
                 }),
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8"
-                }
-            })
-            const updateValuesData = await updateValuesResponse.json()
-            console.log(updateValuesData)
-
-            const newCommentResponse = await fetch(`${import.meta.env.VITE_SERVER}/commentRoutes/addNewComment`, {
+            });
+    
+            const newCommentPromise = fetch(`${import.meta.env.VITE_SERVER}/commentRoutes/addNewComment`, {
                 method: 'POST',
+                headers: { "Content-type": "application/json; charset=UTF-8" },
                 body: JSON.stringify({
-                    pgId: pgId,
+                    pgId,
                     username: user.username,
-                    comment: comment,
+                    comment,
                     bathroomRating: bathroomCondition,
                     roomRating: roomCondition,
                     locationRating: locationConvenience,
-                    overallRating: overallRating,
+                    overallRating,
                     token: user.token
                 }),
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8"
-                }
-            })
-            const newCommentData = await newCommentResponse.json()
-            console.log(newCommentData)
-
-            if (updateValuesData.status === false || newCommentData.status === false) {
-                alert("Something went wrong");
-            } else {
-                alert("PG Added to Database");
-                navigate(`/pgDetails/${pgId}`);
+            });
+    
+            const [updateValuesResponse, newCommentResponse] = await Promise.all([
+                updateValuesPromise,
+                newCommentPromise
+            ]);
+    
+            const updateValuesData = await updateValuesResponse.json();
+            const newCommentData = await newCommentResponse.json();
+    
+            if (!updateValuesData.status || !newCommentData.status) {
+                toast.error("Something went wrong!", { position: "top-center", autoClose: 5000 });
+                return;
             }
+    
+            toast.success("Comment added successfully!", { position: "top-center", autoClose: 3000 });
+            navigate(`/pgDetails/${pgId}`);
+    
+        } catch (err) {
+            console.error("Error:", err);
+            toast.error("Network error! Please try again later.", { position: "top-center", autoClose: 5000 });
         }
-        catch (err) {
-            console.log(err);
-        }
-    }
+    };
+    
 
     return (
         <>
@@ -137,7 +142,7 @@ function NewCommentScreen() {
                 />
             </div>
             <button
-                onClick={addNewPGFunction}
+                onClick={addNewCommentFunction}
                 className="bg-orange-500 text-white py-2 px-4 rounded mt-4 hover:bg-orange-600"
             >
                 Submit
