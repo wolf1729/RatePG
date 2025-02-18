@@ -10,6 +10,7 @@ import DesktopViewDetails from '../components/pgScreenComponents/desktopViewDeta
 import ImageLocationComponent from '../components/pgScreenComponents/imageLocationComponent'
 import ReturnHeader from '../components/returnHeader'
 import { CircularProgress } from '@mui/material'
+import NewCommentScreen from './addCommentModal'
 
 function SpecificPGScreen() {
     const isMobile = useResponsive();
@@ -18,6 +19,7 @@ function SpecificPGScreen() {
     const navigate = useNavigate()
     const [pgDetails, setPGDetails] = useState([])
     const [comments, setComments] = useState([]) 
+    const [commentModal, setCommentModal] = useState(false)
 
     useEffect(() => {
         const gettingPGDetails = async() => {
@@ -57,6 +59,14 @@ function SpecificPGScreen() {
         getAllComments()
     }, [pgID])    
 
+    const openCommentModal = () => {
+        setCommentModal(true)
+    }
+
+    const closeCommentModal = () => {
+        setCommentModal(false)
+    }
+
     const calculateTotalRating = (ratingArray) => {
         if (!ratingArray || ratingArray.length === 0) return 0;
         let overallRating = 0;
@@ -87,7 +97,7 @@ function SpecificPGScreen() {
     const addingComment = () => {
         try{
             if(user.uid !== null){
-                navigate(`/newComment/${pgID}`)
+                openCommentModal()
             }
             else{
                 navigate('/loginRegistration')
@@ -133,6 +143,10 @@ function SpecificPGScreen() {
                 addingComment={addingComment}
                 showingComments={showingComments}
             />
+        }
+
+        {
+            commentModal && <NewCommentScreen openModal={openCommentModal} handleClose={closeCommentModal} pgId={pgID} />
         }
         </>
     )

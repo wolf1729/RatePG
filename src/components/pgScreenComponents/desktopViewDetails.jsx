@@ -37,7 +37,7 @@ function DesktopViewDetails({
             <h2 className="font-extrabold text-xl">Comments</h2>
             <button
               onClick={() => addingComment()}
-              className="bg-teal-500 hover:bg-teal-600 transition text-white py-2 px-4 rounded-md"
+              className="bg-black hover:bg-gray-500 transition text-white py-2 px-4 rounded-md"
             >
               Add Comment and Rating
             </button>

@@ -3,7 +3,6 @@ import HomeScreen from "../screens/homeScreen";
 import SearchScreen from "../screens/searchScreen";
 import NewPGEntryScreen from "../screens/newPGEntryScreen";
 import SpecificPGScreen from "../screens/specificPGScreen";
-import NewCommentScreen from "../screens/addCommentScreen";
 import LoginRegistrationScreen from "../screens/loginRegistrationScreen";
 import FAQScreen from "../screens/faqScreen";
 import ProfileScreen from "../screens/profileScreen";
@@ -26,10 +25,6 @@ const Router = () => {
         {
             path: '/pgDetails/:pgID',
             element: <SpecificPGScreen />
-        },
-        {
-            path: '/newComment/:pgId',
-            element: <NewCommentScreen />
         },
         {
             path: '/loginRegistration',
