@@ -13,7 +13,7 @@ function LoginRegistrationScreen() {
 
     return (
         <>
-            <div className="flex items-center justify-center space-x-4 my-5 w-full h-full">
+            <div className="flex items-center justify-center space-x-4 my-5 w-[100vw] h-[100vh]">
                 <span className="font-semibold">Login</span>
                 <Switch checked={isChecked} onChange={handleToggle} />
                 <span className="font-semibold">Registration</span>
