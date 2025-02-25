@@ -9,7 +9,12 @@ import PgCardComponent from "../components/pgCardComponent";
 function BookmarkedPGScreen() {
     const [bookmarkedPG, setBookmarkedPG] = useState([]);
     const user = useSelector((state) => state.user);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const bookmarkedPG = localStorage.getItem("bookmarkedPgData");
+        setBookmarkedPG(JSON.parse(bookmarkedPG));
+    }, []);
 
     const calculateOverallRating = (overallRatingArray) => {
         let overallRating = 0;
@@ -21,16 +26,16 @@ function BookmarkedPGScreen() {
 
     if (bookmarkedPG === null) {
         return (
-            <div className="w-screen h-screen flex items-center justify-center">
+            <div className="w-full h-screen flex items-center justify-center">
                 <CircularProgress sx={{ color: "black" }} />
             </div>
         );
     }
 
     return (
-        <>
+        <div className="w-full min-h-screen overflow-hidden">
             <ReturnHeader />
-            <div className="w-screen mx-6">
+            <div className="w-full px-6">
                 <p className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl mb-4">
                     Your Bookmarked PGs
                 </p>
@@ -43,14 +48,14 @@ function BookmarkedPGScreen() {
                         to find your perfect accommodation!
                     </p>
                 ) : (
-                    <div>
+                    <div className="flex flex-wrap items-center justify-evenly gap-6 mt-10 w-full">
                         {bookmarkedPG.map((pg, index) => (
                             <PgCardComponent pg={pg} key={index} navigate={navigate} calculateOverallRating={calculateOverallRating} />
                         ))}
                     </div>
                 )}
             </div>
-        </>
+        </div>
     );
 }
 

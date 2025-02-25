@@ -48,8 +48,10 @@ function SearchScreen() {
         const fetchBookmarkedPG = async () => {
             try {
                 const bookmarkedPg = localStorage.getItem("bookmarkedPgData");
+                console.log(bookmarkedPg)
                 
-                if (bookmarkedPg) {
+                if (bookmarkedPg && bookmarkedPg!==undefined) {
+                    console.log("in undefined section")
                     return
                 } else {
                     const bookmarkedPGData = await fetch(`${import.meta.env.VITE_SERVER}/userRoutes/getBookmarkedPG`, {
@@ -63,9 +65,8 @@ function SearchScreen() {
                         })
                     });
                     const data = await bookmarkedPGData.json();
-                    
+                    console.log(data)
                     localStorage.setItem("bookmarkedPgData", JSON.stringify(data.data));
-                    
                 }
             } 
             catch (err) {
