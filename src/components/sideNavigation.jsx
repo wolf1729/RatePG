@@ -43,7 +43,7 @@ function SideNavigation({ user, isOpen, setIsOpen }) {
                         <Divider />
                         <div className="text-center my-4">
                             <p
-                                onClick={() => console.log('Bookmarked Pg')}
+                                onClick={() => navigate('/bookmarks')}
                                 className="text-lg cursor-pointer"
                             >
                                 Bookmarked

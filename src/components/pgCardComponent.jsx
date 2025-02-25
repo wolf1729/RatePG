@@ -10,10 +10,10 @@ function PgCardComponent({ pg, calculateOverallRating, navigate }) {
     const [alertMessage, setAlertMessage] = useState(null);
     const [bookmarked, setBookmarked] = useState(false);
 
-    useEffect(() => {
-        const bookmarkedPG = JSON.parse(localStorage.getItem("bookmarkedPgData")) || { bookmarkedPG: [] };
-        setBookmarked(bookmarkedPG.bookmarkedPG.includes(pg._id));
-    }, [pg._id]);
+    // useEffect(() => {
+    //     const bookmarkedPG = JSON.parse(localStorage.getItem("bookmarkedPgData")) || { bookmarkedPG: [] };
+    //     setBookmarked(bookmarkedPG.bookmarkedPG.includes(pg._id));
+    // }, [pg._id]);
 
     const bookMarkPG = async () => {
         try {
