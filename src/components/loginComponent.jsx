@@ -45,7 +45,7 @@ function LoginComponent() {
     const isLoading = user.status === 'loading';
 
     return (
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center w-[100%]">
             <img src={login} alt="Login" className="w-4/5 md:w-1/5 mb-6" />
             <input
                 type="email"
