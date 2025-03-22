@@ -116,6 +116,7 @@ function ProfileScreen() {
                                 size="medium"
                                 variant="contained"
                                 sx={{ backgroundColor: "black", color: "white" }}
+                                onClick={() => navigate('/newPGEntry')}
                             >
                                 {isMobile ? <IoMdAdd color="white" /> : "Add New PG"}
                             </Button>
