@@ -3,12 +3,10 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ReturnHeader from "../components/returnHeader";
 import { CircularProgress } from "@mui/material";
-import { useSelector } from "react-redux";
 import PgCardComponent from "../components/pgCardComponent";
 
 function BookmarkedPGScreen() {
     const [bookmarkedPG, setBookmarkedPG] = useState([]);
-    const user = useSelector((state) => state.user);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -35,7 +33,7 @@ function BookmarkedPGScreen() {
     return (
         <div className="w-full min-h-screen overflow-hidden">
             <ReturnHeader />
-            <div className="w-full px-6">
+            <div className="w-full px-6 pt-5">
                 <p className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl mb-4">
                     Your Bookmarked PGs
                 </p>

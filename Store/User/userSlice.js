@@ -160,7 +160,8 @@ const userSlice = createSlice({
             state.uid = null;
             state.email = null;
             state.status = 'idle';
-            state.error = null
+            state.error = null;
+            localStorage.clear()
         }
     },
     extraReducers: (builder) => {
