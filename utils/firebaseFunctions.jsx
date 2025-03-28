@@ -67,4 +67,18 @@ async function uploadFileInStorage(file, filename) {
   }
 }
 
-export { uploadFileInStorage, registerEmail, loginEmail, registerGoogle }
+async function uploadProfileImage(file, uid) {
+  try {
+    const storageRef = ref(storage, `profileImages/${uid}/profileImage`);
+    await uploadBytes(storageRef, file);
+
+    const downloadURL = await getDownloadURL(storageRef);
+    console.log(downloadURL)
+    return downloadURL
+  }
+  catch (error) {
+    console.error('Error uploading file:', error); 
+  }
+}
+
+export { uploadFileInStorage, registerEmail, loginEmail, registerGoogle, uploadProfileImage }

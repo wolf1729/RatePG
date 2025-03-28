@@ -4,6 +4,7 @@ import { CiBookmark } from "react-icons/ci";
 import { useSelector } from "react-redux";
 import { Alert } from "@mui/material";
 import { IoMdBookmark } from "react-icons/io";
+import { toast } from "react-toastify";
 
 function PgCardComponent({ pg, calculateOverallRating, navigate }) {
     const user = useSelector((state) => state.user);
@@ -16,51 +17,70 @@ function PgCardComponent({ pg, calculateOverallRating, navigate }) {
     // }, [pg._id]);
 
     const bookMarkPG = async () => {
+        if (!pg?._id || !user?.token || !user?.uid) {
+            setAlertMessage({ type: "error", text: "Invalid request data. Please try again." });
+            return;
+        }
+    
+        let url = bookmarked
+            ? `${import.meta.env.VITE_SERVER}/pgRoutes/removeBookmark`
+            : `${import.meta.env.VITE_SERVER}/pgRoutes/bookmark`;
+    
         try {
-            let url = bookmarked
-                ? `${import.meta.env.VITE_SERVER}/pgRoutes/removeBookmark`
-                : `${import.meta.env.VITE_SERVER}/pgRoutes/bookmark`;
-
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: { 
-                    "Content-Type": "application/json" 
-                },
-                body: JSON.stringify({ 
-                    pgId: pg._id, 
-                    token: user.token, 
-                    uid: user.uid 
-                })
-            });
-
+            const response = await toast.promise(
+                fetch(url, {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ pgId: pg._id, token: user.token, uid: user.uid })
+                }),
+                {
+                    pending: "Processing...",
+                    success: bookmarked ? "PG removed from Bookmark!" : "PG Bookmarked!",
+                    error: "Something went wrong!"
+                }
+            );
+    
             const data = await response.json();
-
-            if (response.ok) {
-                setAlertMessage({
-                    type: "success",
-                    text: bookmarked ? "PG removed from Bookmark!" : "PG Bookmarked!"
-                });
-
-                let bookmarkedPG = JSON.parse(localStorage.getItem("bookmarkedPgData")) || { bookmarkedPG: [] };
-
-                if (bookmarked) {
-                    bookmarkedPG.bookmarkedPG = bookmarkedPG.bookmarkedPG.filter(id => id !== pg._id);
-                } else {
+    
+            if (response.status === 401) {
+                toast.error("Session expired. Please log in again.");
+                navigate("/loginRegistration");
+                return;
+            }
+    
+            if (!response.ok) {
+                setAlertMessage({ type: "warning", text: data.message || "Something went wrong" });
+                return;
+            }
+    
+            // Update Local Storage
+            let bookmarkedPG = JSON.parse(localStorage.getItem("bookmarkedPgData")) || { bookmarkedPG: [] };
+    
+            if (bookmarked) {
+                bookmarkedPG.bookmarkedPG = bookmarkedPG.bookmarkedPG.filter(id => id !== pg._id);
+            } else {
+                if (!bookmarkedPG.bookmarkedPG.includes(pg._id)) {
                     bookmarkedPG.bookmarkedPG.push(pg._id);
                 }
-
-                localStorage.setItem("bookmarkedPgData", JSON.stringify(bookmarkedPG));
-
-                // Toggle bookmark state
-                setBookmarked(!bookmarked);
-            } else {
-                setAlertMessage({ type: "warning", text: data.message || "Something went wrong" });
             }
+    
+            localStorage.setItem("bookmarkedPgData", JSON.stringify(bookmarkedPG));
+    
+            // Toggle bookmark state
+            setBookmarked(!bookmarked);
         } catch (err) {
-            console.error(err);
-            setAlertMessage({ type: "error", text: "An error occurred" });
+            console.error("Error in bookmarking PG:", err);
+    
+            toast.error("Network error! Please check your connection.");
+            setAlertMessage({ type: "error", text: "An error occurred. Try again later." });
+    
+            if (err.message.includes("TokenExpiredError")) {
+                toast.error("Session expired. Please log in again.");
+                navigate("/loginRegistration");
+            }
         }
     };
+    
 
     // Auto-dismiss alert after 3 seconds
     useEffect(() => {

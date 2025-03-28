@@ -7,12 +7,14 @@ import { Button, Divider, useMediaQuery } from "@mui/material";
 import { IoMdAdd } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import PgCardComponent from "../components/pgCardComponent";
+import ProfileImageUpdateModal from "../components/Modals/profileImageUpdateModal";
 
 function ProfileScreen() {
     const navigate = useNavigate();
     const user = useSelector((state) => state.user);
     const isMobile = useMediaQuery("(max-width:600px)");
     const [pgUploaded, setPgUploaded] = useState([]);
+    const [profileImageUpdateModalOpen, setProfileImageUpdateModalOpen] = useState(false);
 
     const calculateOverallRating = (overallRatingArray) => {
         let overallRating = 0;
@@ -25,7 +27,7 @@ function ProfileScreen() {
     useEffect(() => {
         const fetchingUploadedPGs = async() => {
             try {
-                console.log('fetching the uploaded pg')
+                console.log('fetching uploaded PGs')
             }
             catch(err) {
                 console.log(err)
@@ -37,7 +39,7 @@ function ProfileScreen() {
     }, [])
 
     const updateProfileImage = () => {
-
+        setProfileImageUpdateModalOpen(true);
     }
 
     const changePassword = () => {
@@ -134,6 +136,10 @@ function ProfileScreen() {
                     </div>
                 </div>
             </div>
+
+            {
+                profileImageUpdateModalOpen && <ProfileImageUpdateModal open={profileImageUpdateModalOpen} onClose={() => setProfileImageUpdateModalOpen(false)} />
+            }
         </div>
     );
 }
