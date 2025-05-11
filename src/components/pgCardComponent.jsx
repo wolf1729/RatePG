@@ -91,7 +91,7 @@ function PgCardComponent({ pg, calculateOverallRating, navigate }) {
     }, [alertMessage]);
 
     return (
-        <div className="w-full max-w-xs md:max-w-sm lg:max-w-md h-auto shadow-lg p-4 rounded-xl border border-gray-300 mb-5 flex flex-col">
+        <div className="w-full max-w-xs md:max-w-sm lg:max-w-md h-auto shadow-lg p-4 m-2 rounded-xl border border-gray-300 mb-5 flex flex-col">
             {alertMessage && <Alert severity={alertMessage.type}>{alertMessage.text}</Alert>}
 
             <div className="flex flex-col items-center justify-evenly">

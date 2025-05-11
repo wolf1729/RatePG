@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import '../styles/newPGEntryScreenStyle.css';
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';

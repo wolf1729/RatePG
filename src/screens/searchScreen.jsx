@@ -1,4 +1,3 @@
-import '../styles/searchScreenStyle.css';
 import { useState, useEffect } from 'react';
 import HeaderComponent from '../components/header';
 import { findPGName } from '../../utils/pgAPICalls';
@@ -184,7 +183,7 @@ function SearchScreen() {
                 </button>
             </div>
 
-            <div className={`mainPageSearchResultContainer flex flex-row items-center ${ pgDetails.length !== 0 ? "" : "justify-center"} mt-10`}>
+            <div className={`flex flex-col md:flex-row items-center justify-evenly mt-10 w-[100%]`}>
                 { pgDetails.length === 0 && <CircularProgress sx={{ color: 'black' }} /> }
                 {pgDetails.map((pg, index) => (
                     <PgCardComponent key={index} index={index} pg={pg} calculateOverallRating={calculateOverallRating} navigate={navigate} />

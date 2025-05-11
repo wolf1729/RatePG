@@ -1,10 +1,9 @@
 /* eslint-disable react/prop-types */
-import '../styles/homePageHeaderStyle.css';
 import { MdAir } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { GoPerson } from 'react-icons/go';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SideNavigation from './sideNavigation';
 
 function HeaderButtons({ searchScreen, newEntryPage, user, navigation, setSideDrawer }) {
@@ -16,7 +15,7 @@ function HeaderButtons({ searchScreen, newEntryPage, user, navigation, setSideDr
                 ) : (
                     <GoPerson size={40} />
                 )}
-                <p className="font-sm md:text-2xl ml-2">{user.username}</p>
+                <p className="font-sm md:text-xl ml-2">{user.username}</p>
             </div>
         ) : (
             <div className="flex flex-wrap items-center justify-evenly">
@@ -46,7 +45,7 @@ function HeaderButtons({ searchScreen, newEntryPage, user, navigation, setSideDr
     } else {
         return (
             <button
-                className="bg-black text-white px-4 py-2 rounded hover:bg-orange-600 text-sm md:text-base"
+                className="bg-black text-white px-4 py-2 rounded text-sm md:text-base"
                 onClick={() => navigation('/FAQ')}
             >
                 FAQ
@@ -60,8 +59,15 @@ function HeaderComponent({ searchScreen = false, newEntryPage = false }) {
     const navigation = useNavigate();
     const [sideDrawer, setSideDrawer] = useState(false);
 
+    useEffect(() => {
+        if (user) {
+            console.log(user);
+        }
+    }, [user])
+
     return (
-        <div className="homepageHeaderMainContainer">
+        <div className="flex flex-row items-center justify-between">
+            {/* Header */}
             <div className="flex items-center mb-5 mt-5 mx-2 md:mx-10" onClick={() => navigation("/")}>
                 <MdAir size={25} />
                 <span className="text-lg md:text-2xl font-bold ml-2">RatePG</span>
