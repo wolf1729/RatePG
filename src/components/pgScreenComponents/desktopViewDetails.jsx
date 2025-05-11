@@ -11,13 +11,13 @@ function DesktopViewDetails({
         {/* PG Details Section */}
         <div className="w-[30%] shadow-lg p-4 rounded-xl border border-gray-300">
           <p className="font-semibold text-lg">
-            Location Convenience: {calculateTotalRating(pgDetails?.locationCondition)}/5.0
+            Location Convenience : {calculateTotalRating(pgDetails?.locationCondition)}/5.0
           </p>
           <p className="font-semibold text-lg">
-            Room Condition: {calculateTotalRating(pgDetails?.roomCondition)}/5.0
+            Room Condition : {calculateTotalRating(pgDetails?.roomCondition)}/5.0
           </p>
           <p className="font-semibold text-lg">
-            Bathroom Condition: {calculateTotalRating(pgDetails?.bathroomCondition)}/5.0
+            Bathroom Condition : {calculateTotalRating(pgDetails?.bathroomCondition)}/5.0
           </p>
   
           {/* Facilities */}
@@ -29,6 +29,9 @@ function DesktopViewDetails({
           </div>
   
           <p className="font-semibold text-lg mt-4">Rent: ₹{pgDetails?.Price}</p>
+
+          <p className="font-semibold text-lg mt-4">Owner Name : </p>
+          <p className="font-semibold text-lg mt-4">Owner Phone number : </p>
         </div>
   
         {/* Comments Section */}

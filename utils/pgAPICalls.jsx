@@ -29,16 +29,6 @@ const addNewPG = async(pgName, pgLocation, roomCondition, bathroomCondition, loc
     }
 }
 
-//API call to get all PG's details
-const allPG = async() => {
-    try {
-        
-    }
-    catch(err) {
-        console.log(err)
-    }
-}
-
 //API call to get details of Specific PG
 const specificPGusingID = async(pgID) => {
     try {
@@ -103,4 +93,4 @@ const findPGName = async(pgName) => {
     }
 }
 
-export { addNewPG, allPG, specificPGusingID, updateValuesComment, findPGName }
+export { addNewPG, specificPGusingID, updateValuesComment, findPGName }

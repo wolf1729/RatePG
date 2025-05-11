@@ -12,6 +12,8 @@ function DetailsComponent({ pgDetails, calculateTotalRating, showingFacilities }
                 </div>
             </div>
             <p className="font-semibold text-lg">Rent: {pgDetails.Price}</p>
+            <p className="font-semibold text-lg">Owner Name : </p>
+            <p className="font-semibold text-lg">Owner Phone number : </p>
         </div>
     )
 }
